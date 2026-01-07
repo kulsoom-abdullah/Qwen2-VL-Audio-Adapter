@@ -1,0 +1,35 @@
+# Core Frameworks
+torch>=2.4.0          # Allow newer patches, but require 2.4+
+transformers==4.45.2  
+accelerate>=0.26.0
+
+# Audio Processing
+librosa==0.10.1       # Pin to ensure consistency in audio loading
+soundfile>=0.12.1     # Required for saving/loading WAVs
+torchaudio>=2.1.0
+
+# Model Utilities
+bitsandbytes>=0.41.0  # For QLoRA
+peft>=0.7.0           # For LoRA adapters
+datasets>=2.14.0
+
+# Audio Processing
+librosa>=0.10.0
+soundfile>=0.12.0
+ffmpeg-python  # Often needed for gradio/librosa backends
+
+# Data & Analysis
+pandas
+numpy
+tqdm
+matplotlib     # For spectrograms
+jupyter        # For notebooks
+
+# Evaluation 
+jiwer>=3.0.0
+wandb
+huggingface_hub
+
+
+
+
