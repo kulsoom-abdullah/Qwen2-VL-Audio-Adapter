@@ -1,10 +1,11 @@
 """
 05_evaluate.py
 ==============
-Stage 2 Final Model Evaluation
-------------------------------
-Comprehensive inference test on the fine-tuned model.
-Calculates WER/CER on the held-out test set.
+Final Model Evaluation Script
+-----------------------------
+Evaluates the model on the SpeechBrain Test Partition (200 unseen samples).
+Loads model directly from Hugging Face.
+Outputs detailed metrics and a results list.
 """
 
 import os
@@ -16,159 +17,116 @@ from tqdm import tqdm
 from jiwer import wer, cer
 from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, WhisperFeatureExtractor
 
-# --- SMART PATHS ---
+# --- CONFIGURATION ---
+# 1. Use your Hugging Face Model ID
+MODEL_PATH = "kulsoom-abdullah/Qwen2-Audio-7B-Transcription"
+
+# 2. Use the Audit Test Data we just downloaded
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
-
-# Add Fork
-FORK_PATH = os.path.join(PROJECT_ROOT, "transformers_fork", "src")
-if os.path.exists(FORK_PATH):
-    sys.path.insert(0, FORK_PATH)
-else:
-    sys.path.insert(0, os.path.abspath("./transformers_fork/src"))
-
-# Config
-DATA_DIR = os.path.join(PROJECT_ROOT, "data", "stage2_full")
-EVAL_JSON = os.path.join(DATA_DIR, "eval.json")
-# This points to the final merged model from 04_train_stage2.py
-MODEL_PATH = os.path.join(PROJECT_ROOT, "output", "stage2_merged")
-RESULTS_FILE = os.path.join(PROJECT_ROOT, "output", "evaluation_results.json")
+DATA_DIR = os.path.join(PROJECT_ROOT, "data", "audit_test")
+TEST_JSON = os.path.join(DATA_DIR, "test.json")
+OUTPUT_FILE = os.path.join(PROJECT_ROOT, "output", "final_evaluation_results.json")
 
 # Constants
-NUM_SAMPLES = 50  # Test on first 50 eval samples
 AUDIO_TOKEN_ID = 151657
 NUM_AUDIO_TOKENS = 1500
 
-def evaluate():
+def evaluate_model():
     print("="*80)
-    print("🧪 STAGE 2 FINAL MODEL EVALUATION")
+    print("🧪 FINAL MODEL EVALUATION (SpeechBrain Test Set)")
     print("="*80)
 
-    # 1. Validation
-    if not os.path.exists(MODEL_PATH):
-        print(f"❌ Model not found at: {MODEL_PATH}")
-        print("   Make sure '04_train_stage2.py' completed successfully!")
+    # 1. Load Model (From Hugging Face)
+    print(f"\n📥 Loading model: {MODEL_PATH}")
+    try:
+        model = Qwen2VLForConditionalGeneration.from_pretrained(
+            MODEL_PATH,
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+            trust_remote_code=True
+        )
+        model.eval()
+        
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, trust_remote_code=True)
+        feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-large-v3-turbo")
+    except Exception as e:
+        print(f"❌ Error loading model: {e}")
+        print("💡 Hint: Run 'huggingface-cli login' if your model is private.")
         return
 
-    if not os.path.exists(EVAL_JSON):
-        print(f"❌ Eval data not found at: {EVAL_JSON}")
+    # 2. Load Data
+    print(f"\n📊 Loading test data from: {TEST_JSON}")
+    if not os.path.exists(TEST_JSON):
+        print("❌ Test data not found. Run 'python scripts/setup_audit_data.py' first.")
         return
 
-    # 2. Load Model
-    print(f"\n📥 Loading model from: {MODEL_PATH}")
-    model = Qwen2VLForConditionalGeneration.from_pretrained(
-        MODEL_PATH,
-        torch_dtype=torch.bfloat16,
-        device_map="auto",
-        trust_remote_code=True
-    )
-    model.eval()
+    with open(TEST_JSON, 'r') as f:
+        data = json.load(f)
+    print(f"✅ Found {len(data)} samples.")
 
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, trust_remote_code=True)
-    # Ensure special tokens are set correctly for inference
-    tokenizer.pad_token_id = 151643
-    tokenizer.eos_token_id = 151645
-
-    feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-large-v3-turbo")
-
-    # 3. Load Data
-    print(f"\n📊 Loading eval data...")
-    with open(EVAL_JSON, 'r') as f:
-        eval_data = json.load(f)
-
-    test_samples = eval_data[:NUM_SAMPLES]
-    print(f"✅ Testing on {len(test_samples)} samples")
-
-    # 4. Inference Loop
+    # 3. Inference Loop
     results = []
+    print("\n🚀 Running Evaluation...")
     
-    print("\n🚀 RUNNING INFERENCE")
-    for idx, entry in enumerate(tqdm(test_samples, desc="Evaluating")):
-        # Handle relative audio path
-        audio_path = os.path.join(DATA_DIR, entry['audio'])
+    for entry in tqdm(data):
+        audio_abs_path = os.path.join(DATA_DIR, entry['audio'])
         ground_truth = entry['ground_truth']
 
         try:
-            # Prepare Audio
-            y, sr = librosa.load(audio_path, sr=16000, mono=True)
+            # Load Audio
+            y, sr = librosa.load(audio_abs_path, sr=16000, mono=True)
             inputs = feature_extractor(y, sampling_rate=16000, return_tensors="pt")
             input_features = inputs.input_features.to(model.device).to(torch.bfloat16)
 
             # Build Prompt
             audio_tokens = [AUDIO_TOKEN_ID] * NUM_AUDIO_TOKENS
             input_ids_audio = torch.tensor([audio_tokens], device=model.device)
-
-            p1 = tokenizer.encode(
-                "<|im_start|>user\n<|audio_bos|>",
-                add_special_tokens=False,
-                return_tensors="pt"
-            ).to(model.device)
-
-            p2 = tokenizer.encode(
-                "<|audio_eos|>\nTranscribe this audio.<|im_end|>\n<|im_start|>assistant\n",
-                add_special_tokens=False,
-                return_tensors="pt"
-            ).to(model.device)
-
+            
+            p1 = tokenizer.encode("<|im_start|>user\n<|audio_bos|>", add_special_tokens=False, return_tensors="pt").to(model.device)
+            p2 = tokenizer.encode("<|audio_eos|>\nTranscribe this audio.<|im_end|>\n<|im_start|>assistant\n", add_special_tokens=False, return_tensors="pt").to(model.device)
             input_ids = torch.cat([p1, input_ids_audio, p2], dim=1)
-            attention_mask = torch.ones_like(input_ids)
 
             # Generate
             with torch.no_grad():
                 generated_ids = model.generate(
                     input_ids=input_ids,
                     input_features=input_features,
-                    attention_mask=attention_mask,
                     max_new_tokens=128,
-                    do_sample=False,
-                    pad_token_id=tokenizer.pad_token_id,
-                    eos_token_id=tokenizer.eos_token_id
+                    do_sample=False
                 )
 
-            output_text = tokenizer.decode(
-                generated_ids[0][input_ids.shape[1]:],
-                skip_special_tokens=True
-            ).strip()
-
-            # Simple Match Logic
-            match_type = "mismatch"
-            if output_text.lower() == ground_truth.lower():
-                match_type = "exact"
-            elif ground_truth.lower() in output_text.lower():
-                match_type = "partial"
-
+            prediction = tokenizer.decode(generated_ids[0][input_ids.shape[1]:], skip_special_tokens=True).strip()
+            
+            # Calculate Metrics
+            sample_wer = wer(ground_truth.lower(), prediction.lower())
+            
             results.append({
                 "id": entry['id'],
+                "audio": entry['audio'],
                 "ground_truth": ground_truth,
-                "prediction": output_text,
-                "match_type": match_type,
-                "audio_path": entry['audio'] # Keep relative for cleaner JSON
+                "prediction": prediction,
+                "wer": sample_wer
             })
 
         except Exception as e:
-            print(f"\n⚠️  Error on sample {idx}: {e}")
+            print(f"⚠️ Error on {entry['id']}: {e}")
 
-    # 5. Metrics & Reporting
-    references = [r['ground_truth'] for r in results]
-    hypotheses = [r['prediction'] for r in results]
-    
-    final_wer = wer(references, hypotheses)
-    final_cer = cer(references, hypotheses)
-
-    print("\n" + "="*80)
-    print("📊 RESULTS")
-    print("="*80)
-    print(f"WER: {final_wer:.3f}")
-    print(f"CER: {final_cer:.3f}")
-
-    # Save
-    os.makedirs(os.path.dirname(RESULTS_FILE), exist_ok=True)
-    with open(RESULTS_FILE, 'w') as f:
+    # 4. Save Results
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    with open(OUTPUT_FILE, 'w') as f:
         json.dump(results, f, indent=2)
 
-    print(f"\n💾 Detailed results saved to: {RESULTS_FILE}")
-    print("   Run 'notebooks/02_error_analysis.ipynb' to visualize mismatches.")
+    # 5. Final Stats
+    avg_wer = sum(r['wer'] for r in results) / len(results)
+    
+    print("\n" + "="*80)
+    print("📊 EVALUATION SUMMARY")
+    print("="*80)
+    print(f"Total Samples: {len(results)}")
+    print(f"Average WER:   {avg_wer:.4f} ({avg_wer*100:.2f}%)")
+    print(f"Results List:  {OUTPUT_FILE}")
     print("="*80)
 
 if __name__ == "__main__":
-    evaluate()
+    evaluate_model()
