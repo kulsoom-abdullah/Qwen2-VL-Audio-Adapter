@@ -28,7 +28,7 @@ attributes = ["image_processor", "tokenizer", "audio_processor"]
 valid_kwargs = ["chat_template"]
 image_processor_class = "Qwen2VLImageProcessor"
 tokenizer_class = ("Qwen2Tokenizer", "Qwen2TokenizerFast")
-audio_processor_class = "WhisperProcessor"
+audio_processor_class = "WhisperProcessor" # ADDED
 ```
 
 **Why**:
@@ -52,7 +52,7 @@ def __init__(self, image_processor=None, tokenizer=None, chat_template=None, **k
 def __init__(self, image_processor=None, tokenizer=None, audio_processor=None, chat_template=None, **kwargs):
     self.image_token = "<|image_pad|>" if not hasattr(tokenizer, "image_token") else tokenizer.image_token
     self.video_token = "<|video_pad|>" if not hasattr(tokenizer, "video_token") else tokenizer.video_token
-    self.audio_token = "<|audio_pad|>" if not hasattr(tokenizer, "audio_token") else tokenizer.audio_token
+    self.audio_token = "<|audio_pad|>" if not hasattr(tokenizer, "audio_token") else tokenizer.audio_token #ADDED
     super().__init__(image_processor, tokenizer, audio_processor, chat_template=chat_template)
 ```
 
@@ -83,7 +83,7 @@ def __call__(
     images: ImageInput = None,
     text: Union[TextInput, PreTokenizedInput, List[TextInput], List[PreTokenizedInput]] = None,
     videos: VideoInput = None,
-    audios = None,  # np.ndarray or List[np.ndarray]
+    audios = None,  # np.ndarray or List[np.ndarray] ADDED
     **kwargs: Unpack[Qwen2VLProcessorKwargs],
 ) -> BatchFeature:
 ```

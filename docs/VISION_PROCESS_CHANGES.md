@@ -5,7 +5,7 @@
 Modified `qwen_vl_utils/vision_process.py` to add audio handling capability alongside existing image and video support.
 
 **File Location**:
-- Original: `/opt/homebrew/Caskroom/miniforge/base/envs/qwen_audio_project/lib/python3.10/site-packages/qwen_vl_utils/vision_process.py`
+- Original: `<python_env>/site-packages/qwen_vl_utils/vision_process.py`
 - Backup: `vision_process.py.backup`
 
 **Date Modified**: December 2025
@@ -165,7 +165,7 @@ def process_vision_info(messages) -> Tuple[List, List, List]:
 
 ---
 
-## 🔗 Integration with Audio Grafting Pipeline
+## 🔗 Integration with Audio Adapter Pipeline
 
 ### Data Flow
 

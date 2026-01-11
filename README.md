@@ -1,13 +1,13 @@
 # Qwen2-VL-Audio-Adapter
 
-> **Architecture Grafting: Fusing Whisper Audio Encoder onto Qwen2-VL for Production-Grade Speech Recognition**
+> **Multimodal Fusion: Integrating Whisper Audio Encoder with Qwen2-VL for Production-Grade Speech Recognition**
 
 [![HuggingFace](https://img.shields.io/badge/🤗%20Model-HuggingFace-yellow)](https://huggingface.co/kulsoom-abdullah/Qwen2-Audio-7B-Transcription)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
 [![WER](https://img.shields.io/badge/WER-3.6%25-brightgreen)](https://huggingface.co/kulsoom-abdullah/Qwen2-Audio-7B-Transcription)
 
-**Achieves commercial-grade ASR quality (WER 3.6% on Train, 7.3% on Unseen Test)** by grafting a Whisper-Large-v3-Turbo encoder onto Qwen2-VL-7B using a two-stage training pipeline.
+**Achieves commercial-grade ASR quality (WER 3.6% on Train, 7.3% on Unseen Test)** by fusing a Whisper-Large-v3-Turbo encoder with Qwen2-VL-7B using a two-stage training pipeline.
 
 ---
 
@@ -24,17 +24,17 @@
 - [📂 Project Structure](#-project-structure)
 ---
 
-This project demonstrates **architecture grafting** — a technique for extending vision-language models with new modalities by:
+This project demonstrates **audio adapter integration** — a technique for extending vision-language models with new modalities by:
 
-1. **Grafting** a frozen Whisper audio encoder onto Qwen2-VL-7B
+1. **Fusing** a frozen Whisper audio encoder with Qwen2-VL-7B
 2. **Stage 1**: Training a projector layer to align Whisper features (1280-dim) with Qwen embeddings (3584-dim)
 3. **Stage 2**: QLoRA fine-tuning on instruction-following transcription data
 
 ### The "Why"
 
-**Why graft instead of training from scratch?**
+**Why use adapter fusion instead of training from scratch?**
 - **Leverage Pretrained Reasoning**: Inherits the multimodal capabilities of Qwen2-VL-7B.
-- **Reuse Robust Audio Features**: Uses the frozen Whisper-Large-v3-Turbo encoder (1.5B params).
+- **Reuse Robust Audio Features**: Uses the frozen Whisper-Large-v3-Turbo encoder (~640M params, encoder-only).
 - **Compute Efficiency**: Achieves SOTA results with minimal compute (~18 hours total on single A100/RTX 6000).
 - **Parameter Efficient**: Trains only 4.6M projector params + Rank-64 LoRA adapters.
 
@@ -64,7 +64,7 @@ During error analysis, we observed that the model frequently **corrected ground-
 
 ┌─────────────────────────────────────────────────┐
 │  Whisper-Large-v3-Turbo Encoder (FROZEN)        │
-│  1.5B params → 1280-dim audio features          │
+│  ~640M params → 1280-dim audio features         │
 └────────────────┬────────────────────────────────┘
 │
 ↓
@@ -162,7 +162,7 @@ cd Qwen2-VL-Audio-Adapter
 pip install -r requirements.txt
 
 # 3. Install the custom Transformers fork
-# (Required: Contains the modified Qwen2VL source code for Audio Grafting)
+# (Required: Contains the modified Qwen2VL source code for Audio Adapter integration)
 pip install -e transformers_fork/
 
 ```
@@ -205,7 +205,7 @@ Qwen2-VL-Audio-Adapter/
 ├── requirements.txt               # Python dependencies
 │
 ├── scripts/                       # End-to-end training pipeline
-│   ├── 00_graft_architecture.py   # Initial model grafting
+│   ├── 00_graft_architecture.py   # Initial audio adapter setup
 │   ├── 01_prepare_data.py         # Dataset preparation
 │   ├── 02_train_stage1.py         # Stage 1: Projector training
 │   ├── 03_check_stage1.py         # Stage 1 validation
@@ -229,7 +229,7 @@ Qwen2-VL-Audio-Adapter/
 │   └── test_vision_process_local.py # Regression test for vision capabilities
 │
 ├── docs/                          # Technical documentation
-│   ├── architecture_deep_dive.md  # Theory behind the grafting
+│   ├── architecture_deep_dive.md  # Theory behind the audio adapter integration
 │   ├── engineering_log.md         # Daily dev log & decisions
 │   ├── MODELING_QWEN2_VL_CHANGES.md       # Modifications to modeling_qwen2_vl.py
 │   ├── PROCESSING_QWEN2_VL_CHANGES.md     # Modifications to processing_qwen2_vl.py
@@ -273,7 +273,7 @@ Qwen2-VL-Audio-Adapter/
 
 * **Framework**: PyTorch 2.4+
 * **Transformers**: Custom fork of HuggingFace Transformers 4.45.2
-* Modified `Qwen2VLForConditionalGeneration` for audio grafting
+* Modified `Qwen2VLForConditionalGeneration` for audio adapter integration
 * Updated `prepare_inputs_for_generation()` for `.generate()` support
 * Custom processor for audio token handling
 
@@ -349,7 +349,7 @@ target_modules_regex=r"model\.layers\.\d+\.(self_attn\.(q|k|v|o)_proj|mlp\.(gate
 ## 🎓 Key Learnings
 
 1. **Label Noise Detection**: At <4% WER, the model began outperforming the ground truth labels, frequently correcting typos and missing articles in the original SpeechBrain dataset.
-2. **Grafting Viability**: Proved that a simple Linear Projector is sufficient to bridge a 1.5B parameter Audio Encoder to a 7B LLM without retraining the backbones from scratch.
+2. **Adapter Viability**: Proved that a simple Linear Projector is sufficient to bridge a ~640M parameter Audio Encoder to a 7B LLM without retraining the backbones from scratch.
 3. **The Importance of LoRA Targeting**: Precise regex targeting was required to ensure LoRA adapters attached *only* to the LLM layers. Accidental training of the frozen audio encoder results in catastrophic feature collapse.
 
 ---
