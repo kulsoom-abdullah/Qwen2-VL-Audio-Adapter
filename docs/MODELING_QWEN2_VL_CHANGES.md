@@ -206,15 +206,15 @@ Generation loop iteration 2: audio_features=None ❌
 **What Happens With This**:
 ```
 Initial call: forward() processes audio ✅
-Generation loop iteration 1: audio_features passed through ✅
-Generation loop iteration 2: audio_features passed through ✅
+Generation loop iteration 1: uses KV cache ✅
+Generation loop iteration 2: uses KV cache ✅
 ...model generates correct transcription
 ```
 
 **Key Insight**:
-- The `forward()` method only runs **once per token** during generation
-- But `prepare_inputs_for_generation()` runs **every iteration** to prepare inputs for the next token
-- Audio features must persist across iterations, just like pixel_values for vision
+- The features are processed **once** in the pre-fill stage (when `cache_position=0`).
+- Subsequent steps rely on the **KV cache** where the audio embeddings are already stored.
+- `prepare_inputs_for_generation` manages this state to ensure smooth autoregressive decoding.
 
 ---
 

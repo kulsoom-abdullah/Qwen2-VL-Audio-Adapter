@@ -285,6 +285,18 @@ Qwen2-VL-Audio-Adapter/
 
 ---
 
+## 🛠️ Engineering Rigor & Testing
+
+Unlike standard "train-and-pray" projects, this repository includes rigorous sanity checks to ensure the model is functioning as intended.
+
+**`tests/test_audio_sensitivity.py`**
+*   **Purpose**: Verifies that the model is **actually listening** to the audio.
+*   **Method**: Feeds the model distinct audio clips with the *exact same* text instruction.
+*   **Success Criteria**: If the outputs differ, the model is attending to the audio. If outputs are identical, the model is "deaf" (ignoring audio features) and hallucinating based on text priors.
+*   *This test is critical for preventing "placebo" multimodal training where the model learns to ignore the new modality.*
+
+---
+
 ## 🧪 Training Details
 
 ### Hardware & Environment
