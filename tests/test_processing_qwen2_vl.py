@@ -7,7 +7,7 @@ import sys
 import os
 import numpy as np
 
-# Add the fork to sys.path so we import the modified version
+# Add the fork to sys.path so I import the modified version
 fork_path = os.path.join(os.path.dirname(__file__), "transformers_fork/src")
 sys.path.insert(0, fork_path)
 
@@ -88,7 +88,7 @@ try:
     if 'input_features' in result:
         print(f"   input_features shape: {result['input_features'].shape}")
         print(f"   Expected: [1, 80, 3000] (Whisper base spectrogram)")
-        print(f" NOTE: Shape is [1, 80, 3000] because we are using 'whisper-base' for testing.")
+        print(f" NOTE: Shape is [1, 80, 3000] because I am using 'whisper-base' for testing.")
         print(f" The final project uses 'whisper-large-v3-turbo' (128 bins).")
 
 

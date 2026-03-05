@@ -6,7 +6,7 @@ Test the locally modified vision_process.py before installing it.
 import sys
 import os
 
-# Add the current directory to sys.path so we can import the local vision_process
+# Add the current directory to sys.path so I can import the local vision_process
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 

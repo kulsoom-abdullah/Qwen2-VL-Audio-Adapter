@@ -53,7 +53,7 @@ This project demonstrates **audio adapter integration** — a technique for exte
 | **Compute Efficiency** | **~18 GPU-hours** | - | Hundreds/Thousands |
 
 **Qualitative Finding: Label Noise Robustness**
-During error analysis, we observed that the model frequently **corrected ground-truth label errors** (e.g., fixing typos or missing articles present in the training transcripts). This suggests the model has learned robust phonetic mapping rather than just memorizing the dataset noise.
+During error analysis, I observed that the model frequently **corrected ground-truth label errors** (e.g., fixing typos or missing articles present in the training transcripts). This suggests the model has learned robust phonetic mapping rather than just memorizing the dataset noise.
 
 ---
 
@@ -94,10 +94,10 @@ During error analysis, we observed that the model frequently **corrected ground-
 
 ## 🔬 Rigorous Audit: Label Noise & Semantic Bias Discovery
 
-To validate model quality on truly unseen data, we conducted a **blind manual audit** of 100 samples from the SpeechBrain test partition (never seen during training).
+To validate model quality on truly unseen data, I conducted a **blind manual audit** of 100 samples from the SpeechBrain test partition (never seen during training).
 
 ### 🔎 Audit Visualizer
-Because GitHub restricts interactive JavaScript/CSS, we have captured static highlights of the audit below.
+Because GitHub restricts interactive JavaScript/CSS, I have captured static highlights of the audit below.
 
 **1. Label Noise & Entity Resolution**
 *The model (Green) correctly identified "Mr. Šefčovič" (Maroš Šefčovič, EU Commissioner), correcting the ground truth "Mr. Efovi" (Red). It also fixed missing words and grammar.*
