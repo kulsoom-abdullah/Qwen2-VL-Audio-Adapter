@@ -21,7 +21,7 @@ from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, Whisper
 # 1. Use your Hugging Face Model ID
 MODEL_PATH = "kulsoom-abdullah/Qwen2-Audio-7B-Transcription"
 
-# 2. Use the Audit Test Data we just downloaded
+# 2. Use the Audit Test Data I just downloaded
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 DATA_DIR = os.path.join(PROJECT_ROOT, "data", "audit_test")

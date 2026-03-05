@@ -22,11 +22,11 @@
 * **Why the flag exists**: The processor needs to know whether to truncate long audio to fit the encoder's fixed architecture, or to reject it entirely.
 
 **Engineering Decision**:
-* We enforced `truncation=True` in the data pipeline to guarantee stable tensor shapes `[Batch, 1500, 1280]` for the linear projector.
+* I enforced `truncation=True` in the data pipeline to guarantee stable tensor shapes `[Batch, 1500, 1280]` for the linear projector.
 * **Alternative approach**: For >30s audio, a sliding window (chunking) strategy would be required—processing 0-30s, then 30-60s, and stitching embeddings together. This version explicitly supports only the first 30 seconds.
 
 ## 🔧 LoRA Targeting
-**Challenge**: In Stage 2, we needed to fine-tune the LLM without breaking the frozen Audio Encoder.
+**Challenge**: In Stage 2, I needed to fine-tune the LLM without breaking the frozen Audio Encoder.
 **Mistake**: Using generic target names like `["q_proj", "v_proj"]` accidentally targeted the Whisper Encoder layers too (adding 584 unwanted parameters).
 **Fix**: Switched to **Regex Targeting** in `peft_config`:
 ```python

@@ -28,7 +28,7 @@ else:
     sys.path.insert(0, os.path.abspath("./transformers_fork/src"))
 
 # --- CONFIGURATION ---
-# Now we point to data relative to the PROJECT ROOT, not the current working directory
+# Now I point to data relative to the PROJECT ROOT, not the current working directory
 DATA_DIR = os.path.join(PROJECT_ROOT, "data", "full_data")
 BASE_MODEL = os.path.join(PROJECT_ROOT, "model_base_grafted")
 # Model output usually stays in root/output
@@ -91,7 +91,7 @@ def check_inference():
         print(f"Sample: {s['id']}")
         
         # Load Audio (Handle relative path in JSON)
-        # JSON says "audio/train_0001.wav", we join with DATA_DIR
+        # JSON says "audio/train_0001.wav", I join with DATA_DIR
         audio_path = os.path.join(DATA_DIR, s['audio'])
         
         try:

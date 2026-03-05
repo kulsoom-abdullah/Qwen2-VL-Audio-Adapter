@@ -85,7 +85,7 @@ model-index:
 
 ## 🔬 Rigorous Audit: Label Noise & Semantic Bias
 
-To validate model quality on truly unseen data, we conducted a **blind manual audit** of 100 samples from the SpeechBrain test partition.
+To validate model quality on truly unseen data, I conducted a **blind manual audit** of 100 samples from the SpeechBrain test partition.
 
 ### 🔎 Audit Visualizer
 **1. Label Noise & Entity Resolution**
