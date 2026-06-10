@@ -29,35 +29,34 @@ model-index:
       name: Speech Recognition
     dataset:
       type: speechbrain/LargeScaleASR
-      name: SpeechBrain Large Scale ASR
-      split: test
+      name: SpeechBrain Large Scale ASR (held-out eval subset, n≈50)
     metrics:
     - type: wer
-      value: 0.073
-      name: Word Error Rate (Unseen Test)
+      value: 0.036
+      name: Word Error Rate (held-out eval set, n≈50)
     - type: cer
       value: 0.025
-      name: Character Error Rate
+      name: Character Error Rate (held-out eval set, n≈50)
 ---
 
 # Qwen2-VL-Audio-Adapter
 
 > **Multimodal Fusion: Integrating Whisper Audio Encoder with Qwen2-VL for Production-Grade Speech Recognition**
 
-**Achieves commercial-grade ASR quality (WER 3.6% on Train, 7.3% on Unseen Test)** by fusing a [Whisper-Large-v3-Turbo](https://huggingface.co/openai/whisper-large-v3-turbo) encoder onto [Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) using a two-stage training pipeline.
+**Achieves 3.6% WER and 2.5% CER on a held-out eval set (~50 samples)** by fusing a [Whisper-Large-v3-Turbo](https://huggingface.co/openai/whisper-large-v3-turbo) encoder onto [Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) using a two-stage training pipeline.
 
 ## 🎯 Performance Highlights
 
-**Evaluation Context**: Tested on a held-out subset of 100 samples from the SpeechBrain test partition (English Parliamentary speech).
+**Evaluation Context**: WER and CER are the only directly computed metrics, measured on a held-out eval set of ~50 samples (60% exact-match rate). A separate blind manual audit of 100 samples from the SpeechBrain test partition characterized label noise (see below).
 
-| Metric | Training Set | Test Set (Unseen) | Industry Standard |
-|--------|-------------|-------------------|-------------------|
-| **Word Error Rate (WER)** | **3.6%** | **7.3%** | 5-10% |
-| **True WER (Label-Corrected)** | - | **~14%** | - |
-| **Character Error Rate (CER)** | **2.5%** | **2.5%** | 3-5% |
-| **Label Correction Rate** | - | **36%** | - |
+| Metric | Value | Scope | Industry Standard |
+|--------|-------|-------|-------------------|
+| **Word Error Rate (WER)** | **3.6%** | Held-out eval set (n≈50) | 5–10% |
+| **Character Error Rate (CER)** | **2.5%** | Held-out eval set (n≈50) | 3–5% |
+| **Label Correction Rate** | **36%** | Manual audit (n=100, SpeechBrain test) | - |
+| **Sample-level error rate** | **~14%** | Manual audit (n=100), after removing label noise | - |
 
-**Novel Finding:** On completely unseen test data, the model corrected ground truth annotations in 36% of disagreement cases, demonstrating super-human labeling performance through context-aware semantic reasoning.
+**Novel Finding:** In the 100-sample manual audit, the model corrected ground-truth annotations in 36% of samples (the majority of all disagreements), demonstrating context-aware semantic reasoning. Note this is a sample-level rate from manual review, not a measured WER.
 
 ## 🏗️ Architecture
 
@@ -99,10 +98,13 @@ To validate model quality on truly unseen data, we conducted a **blind manual au
 ### Quantitative Analysis (N=100)
 | Category | Count | Description |
 |----------|-------|-------------|
-| **✅ Label Noise (Model Correct)** | **36%** | Model outperformed ground truth annotations |
-| **❌ True Model Errors** | 14% | Model genuinely misheard or hallucinated |
-| **⚠️ Ambiguous** | 11% | Heavy accents or unclear audio |
-| **✓ Perfect Matches** | 37% | Exact agreement |
+| **✅ Label Noise (Model Correct)** | 36 | Model outperformed ground truth annotations |
+| **❌ True Model Errors** | 14 | Model genuinely misheard or hallucinated |
+| **⚠️ Ambiguous** | 11 | Heavy accents or unclear audio |
+| **ℹ️ Normalization** | 1 | Punctuation/formatting differences |
+| **✓ Perfect Matches** | 37 | Exact agreement |
+| **❔ Uncategorized** | 1 | Disagreement not classified (sample #60) |
+| **Total** | **100** | |
 
 ## 💻 Usage
 

@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
 [![WER](https://img.shields.io/badge/WER-3.6%25-brightgreen)](https://huggingface.co/kulsoom-abdullah/Qwen2-Audio-7B-Transcription)
 
-**Achieves commercial-grade ASR quality (WER 3.6% on Train, 7.3% on Unseen Test)** by fusing a Whisper-Large-v3-Turbo encoder with Qwen2-VL-7B using a two-stage training pipeline.
+**Achieves 3.6% WER and 2.5% CER on a held-out eval set (~50 samples)** by fusing a Whisper-Large-v3-Turbo encoder with Qwen2-VL-7B using a two-stage training pipeline.
 
 ---
 
@@ -42,15 +42,15 @@ This project demonstrates **audio adapter integration** — a technique for exte
 
 ## 📊 Performance Highlights
 
-**Evaluation Context**: Tested on a held-out subset of 100 samples from the SpeechBrain test partition (English Parliamentary speech).
+**Evaluation Context**: WER and CER are the only directly computed metrics, measured on a held-out eval set of ~50 samples (60% exact-match rate; see [`notebooks/01_View_Results_Highlighted.ipynb`](notebooks/01_View_Results_Highlighted.ipynb)). A separate blind manual audit of 100 samples from the SpeechBrain test partition characterized label noise (see [Rigorous Audit](#-rigorous-audit-label-noise--semantic-bias-discovery) below).
 
-| Metric | Training Set | Test Set (Unseen) | Industry Standard |
-|--------|-------------|-------------------|-------------------|
-| **Word Error Rate (WER)** | **3.6%** | **7.3%** | 5-10% |
-| **True WER (Label-Corrected)** | - | **~14%** | - |
-| **Character Error Rate (CER)** | **2.5%** | **2.5%** | 3-5% |
-| **Label Correction Rate** | - | **36%** | - |
-| **Compute Efficiency** | **~18 GPU-hours** | - | Hundreds/Thousands |
+| Metric | Value | Scope | Industry Standard |
+|--------|-------|-------|-------------------|
+| **Word Error Rate (WER)** | **3.6%** | Held-out eval set (n≈50) | 5–10% |
+| **Character Error Rate (CER)** | **2.5%** | Held-out eval set (n≈50) | 3–5% |
+| **Label Correction Rate** | **36%** | Manual audit (n=100, SpeechBrain test) | - |
+| **Sample-level error rate** | **~14%** | Manual audit (n=100), after removing label noise | - |
+| **Compute Efficiency** | **~18 GPU-hours** | Total, both training stages | Hundreds/Thousands |
 
 **Qualitative Finding: Label Noise Robustness**
 During error analysis, we observed that the model frequently **corrected ground-truth label errors** (e.g., fixing typos or missing articles present in the training transcripts). This suggests the model has learned robust phonetic mapping rather than just memorizing the dataset noise.
@@ -125,6 +125,8 @@ Because GitHub restricts interactive JavaScript/CSS, we have captured static hig
 | **⚠️ Ambiguous/Both Wrong** | 11 | 11% | Heavy accents, unclear audio, or both incorrect |
 | **ℹ️ Normalization Differences** | 1 | 1% | Punctuation/formatting differences |
 | **✓ Perfect Matches** | 37 | 37% | Exact agreement with ground truth |
+| **❔ Uncategorized** | 1 | 1% | Disagreement not classified during the audit (sample #60) |
+| **Total** | **100** | **100%** | |
 
 **Key Insight:** In 36 out of 100 test samples, the model's transcription was more accurate than the human-annotated ground truth, revealing systematic annotation errors including:
 - Missing or incorrect words
@@ -278,7 +280,7 @@ Qwen2-VL-Audio-Adapter/
 * Custom processor for audio token handling
 
 
-* **PEFT**: 4-bit QLoRA (rank-64, alpha-128) for memory-efficient fine-tuning
+* **PEFT**: 4-bit QLoRA (rank-64, alpha-16 → 0.25 scaling ratio) for memory-efficient fine-tuning
 * **Audio**: Librosa + torchaudio + Whisper feature extraction
 * **Monitoring**: Weights & Biases for experiment tracking
 * **Hardware**: NVIDIA A100 40GB and RTX 6000 Ada (Lambda Labs / RunPod)
