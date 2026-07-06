@@ -1,0 +1,4 @@
+# The 63 audit WAVs are decoded from the committed notebook's saved output
+# (notebooks/01_View_Results_Highlighted.ipynb, cell 14) by extract_cases.py.
+# Regenerable deterministically -- not duplicated in git (~28 MB).
+audio/
