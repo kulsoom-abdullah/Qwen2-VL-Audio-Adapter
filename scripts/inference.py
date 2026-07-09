@@ -14,7 +14,7 @@ import os
 # -----------------------------------------------------------------------------
 # 🔧 CRITICAL: Force usage of local transformers fork
 # -----------------------------------------------------------------------------
-# We must insert this at position 0 to override any installed transformers version
+# I must insert this at position 0 to override any installed transformers version
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 fork_path = os.path.join(project_root, "transformers_fork", "src")
 sys.path.insert(0, fork_path)
@@ -29,8 +29,8 @@ def transcribe(audio_path, model_path="kulsoom-abdullah/Qwen2-Audio-7B-Transcrip
     print(f"⏳ Loading model from: {model_path}...")
     
     # 1. Load Model & Processor
-    #    Note: We rely on the local fork logic, so we don't strictly need trust_remote_code=True 
-    #    if we are loading the weights into our local class, but it's safer to keep it.
+    #    Note: I rely on the local fork logic, so I don't strictly need trust_remote_code=True
+    #    if I am loading the weights into my local class, but it's safer to keep it.
     model = Qwen2VLForConditionalGeneration.from_pretrained(
         model_path, 
         torch_dtype=torch.bfloat16, 

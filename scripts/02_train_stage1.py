@@ -72,7 +72,7 @@ class Stage1Collator:
         
         for f in features:
             # 1. Load Audio from Path
-            # JSON contains "audio/filename.wav", we join with base_dir
+            # JSON contains "audio/filename.wav", I join with base_dir
             audio_path = os.path.join(self.base_dir, f["audio"])
             try:
                 wav, _ = librosa.load(audio_path, sr=16000, mono=True)
@@ -81,7 +81,7 @@ class Stage1Collator:
             audios.append(wav)
             
             # 2. Get Text (Ground Truth)
-            # We train the projector to simply predict the text caption
+            # I train the projector to simply predict the text caption
             text = f["ground_truth"] + self.tokenizer.eos_token
             texts.append(text)
 

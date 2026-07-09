@@ -165,8 +165,8 @@ def prepare_inputs_for_generation(
 **Change 2: Pass through when using cache** (line ~1858):
 ```python
 if past_key_values is not None:
-    # When using KV-cache, we only process new tokens
-    # BUT: We must preserve audio features for the generation loop
+    # When using KV-cache, I only process new tokens
+    # BUT: I must preserve audio features for the generation loop
     model_inputs = {
         "input_ids": input_ids,
         "past_key_values": past_key_values,
@@ -206,15 +206,15 @@ Generation loop iteration 2: audio_features=None ❌
 **What Happens With This**:
 ```
 Initial call: forward() processes audio ✅
-Generation loop iteration 1: audio_features passed through ✅
-Generation loop iteration 2: audio_features passed through ✅
+Generation loop iteration 1: uses KV cache ✅
+Generation loop iteration 2: uses KV cache ✅
 ...model generates correct transcription
 ```
 
 **Key Insight**:
-- The `forward()` method only runs **once per token** during generation
-- But `prepare_inputs_for_generation()` runs **every iteration** to prepare inputs for the next token
-- Audio features must persist across iterations, just like pixel_values for vision
+- The features are processed **once** in the pre-fill stage (when `cache_position=0`).
+- Subsequent steps rely on the **KV cache** where the audio embeddings are already stored.
+- `prepare_inputs_for_generation` manages this state to ensure smooth autoregressive decoding.
 
 ---
 
@@ -269,8 +269,8 @@ If you forgot to patch `prepare_inputs_for_generation()`:
 
 ### Why Delete Decoder?
 
-- **Qwen is the decoder**: The Qwen2-VL LLM already handles text generation. We only need Whisper's "ears" (encoder) for audio understanding, not its "voice" (decoder).
-- **Memory savings**: Saves ~800MB VRAM (decoder parameters we don't need)
+- **Qwen is the decoder**: The Qwen2-VL LLM already handles text generation. I only need Whisper's "ears" (encoder) for audio understanding, not its "voice" (decoder).
+- **Memory savings**: Saves ~800MB VRAM (decoder parameters I don't need)
 - **Architectural clarity**: One encoder for audio features → one LLM for reasoning and generation
 
 ### Projection Layer Design
@@ -278,7 +278,7 @@ If you forgot to patch `prepare_inputs_for_generation()`:
 **Linear only (no bias)**:
 - **Preserves geometry**: Rotates and scales Whisper embeddings to match Qwen's dimension without shifting their distribution center
 - **Direct mapping**: Forces the model to learn a structural alignment between audio features and text tokens, rather than learning arbitrary offsets
-- Whisper's embeddings already have meaningful structure (similar sounds clustered together); we want to project that structure directly into Qwen's space
+- Whisper's embeddings already have meaningful structure (similar sounds clustered together); I want to project that structure directly into Qwen's space
 
 **Initialization**:
 - `normal_(mean=0.0, std=0.02)` (using Qwen's `initializer_range`)
@@ -334,7 +334,7 @@ graph TD
 
 **Comparison**:
 - Full Whisper-Large-v3-Turbo: 809M parameters (encoder + decoder)
-- Our implementation: 640M parameters (encoder only)
+- My implementation: 640M parameters (encoder only)
 - **Efficiency gain**: 169M fewer parameters by using Qwen as the decoder
 
 ---

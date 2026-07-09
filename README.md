@@ -53,7 +53,7 @@ This project demonstrates **audio adapter integration** — a technique for exte
 | **Compute Efficiency** | **~18 GPU-hours** | Total, both training stages | Hundreds/Thousands |
 
 **Qualitative Finding: Label Noise Robustness**
-During error analysis, we observed that the model frequently **corrected ground-truth label errors** (e.g., fixing typos or missing articles present in the training transcripts). This suggests the model has learned robust phonetic mapping rather than just memorizing the dataset noise.
+During error analysis, I observed that the model frequently **corrected ground-truth label errors** (e.g., fixing typos or missing articles present in the training transcripts). This suggests the model has learned robust phonetic mapping rather than just memorizing the dataset noise.
 
 ---
 
@@ -94,10 +94,10 @@ During error analysis, we observed that the model frequently **corrected ground-
 
 ## 🔬 Rigorous Audit: Label Noise & Semantic Bias Discovery
 
-To validate model quality on truly unseen data, we conducted a **blind manual audit** of 100 samples from the SpeechBrain test partition (never seen during training).
+To validate model quality on truly unseen data, I conducted a **blind manual audit** of 100 samples from the SpeechBrain test partition (never seen during training).
 
 ### 🔎 Audit Visualizer
-Because GitHub restricts interactive JavaScript/CSS, we have captured static highlights of the audit below.
+Because GitHub restricts interactive JavaScript/CSS, I have captured static highlights of the audit below.
 
 **1. Label Noise & Entity Resolution**
 *The model (Green) correctly identified "Mr. Šefčovič" (Maroš Šefčovič, EU Commissioner), correcting the ground truth "Mr. Efovi" (Red). It also fixed missing words and grammar.*
@@ -284,6 +284,18 @@ Qwen2-VL-Audio-Adapter/
 * **Audio**: Librosa + torchaudio + Whisper feature extraction
 * **Monitoring**: Weights & Biases for experiment tracking
 * **Hardware**: NVIDIA A100 40GB and RTX 6000 Ada (Lambda Labs / RunPod)
+
+---
+
+## 🛠️ Engineering Rigor & Testing
+
+Unlike standard "train-and-pray" projects, this repository includes rigorous sanity checks to ensure the model is functioning as intended.
+
+**`tests/test_audio_sensitivity.py`**
+*   **Purpose**: Verifies that the model is **actually listening** to the audio.
+*   **Method**: Feeds the model distinct audio clips with the *exact same* text instruction.
+*   **Success Criteria**: If the outputs differ, the model is attending to the audio. If outputs are identical, the model is "deaf" (ignoring audio features) and hallucinating based on text priors.
+*   *This test is critical for preventing "placebo" multimodal training where the model learns to ignore the new modality.*
 
 ---
 
