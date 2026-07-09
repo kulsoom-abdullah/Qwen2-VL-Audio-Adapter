@@ -2,3 +2,7 @@
 # (notebooks/01_View_Results_Highlighted.ipynb, cell 14) by extract_cases.py.
 # Regenerable deterministically -- not duplicated in git (~28 MB).
 audio/
+
+# Root .gitignore has a blanket `*.json` rule (line 234); cases.json is the
+# audit's artifact-of-record and MUST be tracked -- re-include it here.
+!cases.json

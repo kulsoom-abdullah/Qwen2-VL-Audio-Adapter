@@ -1,0 +1,2006 @@
+{
+  "meta": {
+    "source_notebook": "notebooks/01_View_Results_Highlighted.ipynb",
+    "source_cells": {
+      "run_counts": "cell 12 saved output",
+      "per_case_content": "cell 14 saved output (WER-sorted disagreement table)",
+      "dispositions": "cell 16 source (row-number-keyed lists)"
+    },
+    "extraction_script": "analysis/label_audit/extract_cases.py",
+    "total_audited": 100,
+    "perfect_match_count": 37,
+    "disagreement_count": 63,
+    "perfect_match_note": "The 37 perfect-match samples' identities are NOT individually recoverable: output/audit_batch_results.json and data/ were not preserved, and the source dataset revision is unpinned. Count is taken from cell 12's saved output of the original run.",
+    "row_semantics": "row = position in cell 14's WER-sorted disagreement table (1-63)",
+    "diff_semantics": "word-level difflib opcodes, case-insensitive match, original case preserved",
+    "taxonomy": {
+      "label_wrong_model_right": {
+        "A1": "spelling/orthography fix",
+        "A2": "missing word restored",
+        "A3": "grammar/agreement normalization",
+        "A4": "contextual entity resolution (Malta pattern)",
+        "A5": "punctuation/format only",
+        "A6": "other"
+      },
+      "true_model_error": {
+        "B1": "acoustic confusion (phonetically similar substitution)",
+        "B2": "omission",
+        "B3": "insertion/hallucination",
+        "B4": "fluent semantic substitution",
+        "B5": "other"
+      }
+    },
+    "label_status": "PROVISIONAL - subcategory fields are null until Kulsoom adjudicates"
+  },
+  "cases": [
+    {
+      "row": 1,
+      "sample_id": "test_70",
+      "audio_path": "analysis/label_audit/audio/row01_test_70.wav",
+      "wer_pct": 120.0,
+      "reference_text": "HAVE A LOOK AT CHINA AND SAUDI ARABIA THEY FILTER CONTENT ACCORDING TO POLITICAL IDEAS",
+      "prediction_text": "if you have a look at china and saudi arabia they fill the content according to political ideas",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "if",
+            "you"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "FILTER"
+          ],
+          "pred": [
+            "fill",
+            "the"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->2), replace(1->2)",
+      "notes": ""
+    },
+    {
+      "row": 2,
+      "sample_id": "test_29",
+      "audio_path": "analysis/label_audit/audio/row02_test_29.wav",
+      "wer_pct": 35.3,
+      "reference_text": "AND TWENTY THE GREAT INNOVATION UNION DIGITAL ACCESS TO ALL THE NEXT GENERATION NETWORK AND SO FORTH",
+      "prediction_text": "THE GREAT INNOVATION UNION THE DIGITAL ACCESS TO ALL THE NEXT GENERATION NETWORK AND SO ON AND SO FORTH",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "AND",
+            "TWENTY"
+          ],
+          "pred": []
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "ON",
+            "AND",
+            "SO"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: delete(2->0), insert(0->1), insert(0->3)",
+      "notes": ""
+    },
+    {
+      "row": 3,
+      "sample_id": "test_48",
+      "audio_path": "analysis/label_audit/audio/row03_test_48.wav",
+      "wer_pct": 28.6,
+      "reference_text": "YOU CAN DECLARE ADOPTED OR NOT ADOPTED",
+      "prediction_text": "SO YOU CAN DECLARE IT ADOPTED OR NOT ADOPTED",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "SO"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "IT"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A2",
+      "provisional_rationale": "model adds word(s) absent from label: ['SO', 'IT']",
+      "notes": ""
+    },
+    {
+      "row": 4,
+      "sample_id": "test_152",
+      "audio_path": "analysis/label_audit/audio/row04_test_152.wav",
+      "wer_pct": 26.2,
+      "reference_text": "MR EFOVI IF YOU WANT TO FLY WITH YOUR OR OUR AIRBUS THREE HUNDRED AND EIGHTY ENERGY PACKAGE YOU MUST DISTRIBUTE AS A GOOD MANAGER RESPONSIBILITIES TO EVERY MEMBER OF THE CREW RESPONSIBILITIES WITH HIGHER PRIORITY THAN FLEXIBILITY IN EACH MEMBER STATE",
+      "prediction_text": "IF MR ŞEFÇOVIČ YOU WANT TO FLY WITH YOUR OR OUR AIRBUS A380 ENERGY PACKAGE YOU MUST DISTRIBUTED AS A GOOD MANAGER THE RESPONSIBILITIES TO EVERY MEMBER OF THE CREW RESPONSIBILITIES WITH HIGHER PRIORITY THAN THE FLEXIBILITY OF EACH MEMBER STATE",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "IF"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "EFOVI",
+            "IF"
+          ],
+          "pred": [
+            "ŞEFÇOVIČ"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "THREE",
+            "HUNDRED",
+            "AND",
+            "EIGHTY"
+          ],
+          "pred": [
+            "A380"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "DISTRIBUTE"
+          ],
+          "pred": [
+            "DISTRIBUTED"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "IN"
+          ],
+          "pred": [
+            "OF"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(2->1), replace(4->1), replace(1->1), insert(0->1), insert(0->1), replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 5,
+      "sample_id": "test_39",
+      "audio_path": "analysis/label_audit/audio/row05_test_39.wav",
+      "wer_pct": 22.2,
+      "reference_text": "EFFORT IF WE DO NOT DO THAT WE WILL",
+      "prediction_text": "IF WE DO NOT DO THAT WE WILL LOSE",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "EFFORT"
+          ],
+          "pred": []
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "LOSE"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), insert(0->1)",
+      "notes": ""
+    },
+    {
+      "row": 6,
+      "sample_id": "test_134",
+      "audio_path": "analysis/label_audit/audio/row06_test_134.wav",
+      "wer_pct": 20.0,
+      "reference_text": "TODAY EUROPE IS FREE AND REUNITED AND I WANT TO THANK THIS HOUSE AND EACH AND EVERY ONE WHO DARED TO SPEAK OUT AT THAT TIME FOR TRUTH AND FREEDOM",
+      "prediction_text": "TODAY EUROPE IS FREE AND REUNITED AND I WANT TO THANK THIS HOUSE AND EACH AND EVERYONE WHO DARED TO SPEAK AT THAT TIME TO SPEAK OUT FOR TRUTH AND FREEDOM",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "EVERY",
+            "ONE"
+          ],
+          "pred": [
+            "EVERYONE"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "OUT"
+          ],
+          "pred": []
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "TO",
+            "SPEAK",
+            "OUT"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(2->1), delete(1->0), insert(0->3)",
+      "notes": ""
+    },
+    {
+      "row": 7,
+      "sample_id": "test_98",
+      "audio_path": "analysis/label_audit/audio/row07_test_98.wav",
+      "wer_pct": 20.0,
+      "reference_text": "THEY CANNOT GO TO SCHOOL",
+      "prediction_text": "THEY CANNOT GO TO SCHOOL.",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "SCHOOL"
+          ],
+          "pred": [
+            "SCHOOL."
+          ]
+        }
+      ],
+      "original_disposition": "normalization_only",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 8,
+      "sample_id": "test_56",
+      "audio_path": "analysis/label_audit/audio/row08_test_56.wav",
+      "wer_pct": 19.1,
+      "reference_text": "THAT HARSH TREATMENT WAS METED OUT BY MR PTTERING AND MR SIWIEC THE VICE PRESIDENT REPLACING HIM LATER IN THE AFTERNOON",
+      "prediction_text": "THAT HARSH TREATMENT WAS METED OUT BY MR PUTTERING AND MR MAJKECIEVIC THE VICEPRESIDENT REPLACING HIM LATER IN THE AFTERNOON",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "PTTERING"
+          ],
+          "pred": [
+            "PUTTERING"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "SIWIEC"
+          ],
+          "pred": [
+            "MAJKECIEVIC"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "VICE",
+            "PRESIDENT"
+          ],
+          "pred": [
+            "VICEPRESIDENT"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), replace(1->1), replace(2->1)",
+      "notes": ""
+    },
+    {
+      "row": 9,
+      "sample_id": "test_185",
+      "audio_path": "analysis/label_audit/audio/row09_test_185.wav",
+      "wer_pct": 18.2,
+      "reference_text": "THEREFORE WE WOULD LIKE TO PROTEST AGAINST CHANGING THE LEGAL BASIS",
+      "prediction_text": "AND THEREFORE WE WOULD LIKE TO PROTEST AGAINST CHANGING THE LEGAL BASE",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "AND"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "BASIS"
+          ],
+          "pred": [
+            "BASE"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 10,
+      "sample_id": "test_87",
+      "audio_path": "analysis/label_audit/audio/row10_test_87.wav",
+      "wer_pct": 16.7,
+      "reference_text": "I DO NOT WANT TO DEPICT A DOOM SCENARIO FOR THE FUTURE NOR DO I WANT TO LOOK BACK IN ANGER ABOUT THE FAILURE OF COPENHAGEN ALTHOUGH I AM ANGRY THEREFORE THE RESOLUTION IS TO DO FAR BETTER IN THE FUTURE THE NEXT OPPORTUNITY BEING MEXICO THIS YEAR",
+      "prediction_text": "I DO NOT WANT TO DEPICT A DOOMSCENARIO FOR THE FUTURE NOR DO I WANT TO LOOK BACK IN ANGER ABOUT THE FAILURE OF COPENHAGEN ALTHOUGH I AM ANGRY THEREFORE THREE SOLUTIONS TO DO FAR BETTER IN THE FUTURE THE NEXT STEP AT DUTYUNITY BEING MEXICO THIS YEAR",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "DOOM",
+            "SCENARIO"
+          ],
+          "pred": [
+            "DOOMSCENARIO"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "THE",
+            "RESOLUTION",
+            "IS"
+          ],
+          "pred": [
+            "THREE",
+            "SOLUTIONS"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "OPPORTUNITY"
+          ],
+          "pred": [
+            "STEP",
+            "AT",
+            "DUTYUNITY"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 8 replaced, 0 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 11,
+      "sample_id": "test_116",
+      "audio_path": "analysis/label_audit/audio/row11_test_116.wav",
+      "wer_pct": 16.0,
+      "reference_text": "IT IS NOT ONLY IN EUROPE IT IS ALL OVER THE WORLD AND WE HAVE A RESPONSIBILITY TO SHOW THE WAY AND LEAD THE WAY",
+      "prediction_text": "IT'S NOT ONLY IN EUROPE IT'S ALL OVER THE WORLD AND WE HAVE A RESPONSIBILITY TO SHOW THE WAY AND LEAD THE WAY",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "IT",
+            "IS"
+          ],
+          "pred": [
+            "IT'S"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "IT",
+            "IS"
+          ],
+          "pred": [
+            "IT'S"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(2->1), replace(2->1)",
+      "notes": ""
+    },
+    {
+      "row": 12,
+      "sample_id": "test_93",
+      "audio_path": "analysis/label_audit/audio/row12_test_93.wav",
+      "wer_pct": 15.8,
+      "reference_text": "THE ARTICLE LIMITS EXISTING RIGHTS AND ELIMINATES WELLFUNCTIONING MINORITY LANGUAGE SCHOOL SYSTEMS WHICH HAVE WORKED VERY WELL SO FAR",
+      "prediction_text": "THE ARTICLE LIMITS EXISTING RIGHTS AND ELIMINATES WELL FUNCTIONING MINORITY LANGUAGE SCHOOL SYSTEMS WHICH WORKED VERY WELL SO FAR",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "WELLFUNCTIONING"
+          ],
+          "pred": [
+            "WELL",
+            "FUNCTIONING"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "HAVE"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->2), delete(1->0)",
+      "notes": ""
+    },
+    {
+      "row": 13,
+      "sample_id": "test_189",
+      "audio_path": "analysis/label_audit/audio/row13_test_189.wav",
+      "wer_pct": 15.4,
+      "reference_text": "I KNOW IT MEANS AS MUCH TO THEM AS IT MEANS TO ME",
+      "prediction_text": "SO IT MEANS AS MUCH TO THEM AS IT MEANS TO ME",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "I",
+            "KNOW"
+          ],
+          "pred": [
+            "SO"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(2->1)",
+      "notes": ""
+    },
+    {
+      "row": 14,
+      "sample_id": "test_166",
+      "audio_path": "analysis/label_audit/audio/row14_test_166.wav",
+      "wer_pct": 15.0,
+      "reference_text": "ARE YOU WILLING TO ACT IN FAVOUR OF THE SOCIAL DIMENSION TO BE INCLUDED IN THE EU COMPETENCIES AS PROPOSED",
+      "prediction_text": "ARE YOU WILLING TO ACT IN FAVOUR OF THE SOCIAL DIMENSION BEING INCLUDED IN THE EU COMPETENCES AS PROPOSED",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "TO",
+            "BE"
+          ],
+          "pred": [
+            "BEING"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "COMPETENCIES"
+          ],
+          "pred": [
+            "COMPETENCES"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B4",
+      "provisional_rationale": "fluent but dissimilar substitutions: ['TO BE->BEING', 'COMPETENCIES->COMPETENCES']",
+      "notes": ""
+    },
+    {
+      "row": 15,
+      "sample_id": "test_55",
+      "audio_path": "analysis/label_audit/audio/row15_test_55.wav",
+      "wer_pct": 13.5,
+      "reference_text": "TO AVOID ANY SUSPICION THAT THE COUNCIL IN THIS SITUATION WOULD TAKE THE ADOPTION OF AMENDING BUDGET NO SIX AS AN ARGUMENT FOR DELAYING AND NOT ADOPTING AMENDING BUDGET NO EIGHT MY GROUP HAS TABLED AN AMENDMENT IN ORDER TO LINK THE ADOPTION OF AMENDING BUDGET NO SIX WITH AMENDING BUDGET NO",
+      "prediction_text": "TO AVOID ANY SUSPICION THAT THE COUNCIL IN THIS SITUATION WOULD TAKE THE ADOPTION OF AMENDING BUDGETARY RULES AS AN ARGUMENT FOR DELAYING OR NOT ADOPTING AMENDING BUDGET EIGHT MY GROUP HAS TABLED AN AMENDMENT IN ORDER TO LINK THE ADOPTION OF AMENDING BUDGET RULE SIX WITH AMENDING BUDGET EIGHT",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "BUDGET",
+            "NO",
+            "SIX"
+          ],
+          "pred": [
+            "BUDGETARY",
+            "RULES"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "AND"
+          ],
+          "pred": [
+            "OR"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "NO"
+          ],
+          "pred": []
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "NO"
+          ],
+          "pred": [
+            "RULE"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "NO"
+          ],
+          "pred": [
+            "EIGHT"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 6 replaced, 1 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 16,
+      "sample_id": "test_164",
+      "audio_path": "analysis/label_audit/audio/row16_test_164.wav",
+      "wer_pct": 13.3,
+      "reference_text": "BUT AS A SOCIALIST OF COURSE IT IS VERY EASY TO SPEND OTHER PEOPLE'S MONEY",
+      "prediction_text": "BUT AS A SOCIALIST OF COURSE IT'S VERY EASY TO SPEND OTHER PEOPLE'S MONEY",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "IT",
+            "IS"
+          ],
+          "pred": [
+            "IT'S"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(2->1)",
+      "notes": ""
+    },
+    {
+      "row": 17,
+      "sample_id": "test_6",
+      "audio_path": "analysis/label_audit/audio/row17_test_6.wav",
+      "wer_pct": 12.5,
+      "reference_text": "SECONDLY THE COURT HAS BEEN ADAMANT ABOUT HIGHLIGHTING THE IMPORTANCE OF THE FULL COMMITMENT OF MEMBER STATES IN ENSURING BETTER RULES AND BETTER SPENDING",
+      "prediction_text": "SECOND THE COURT HAS BEEN ADAMANT ON HIGHLIGHTING THE IMPORTANCE OF FULL COMMITMENT OF MEMBER STATES IN ENSURING BETTER RULES AND BETTER SPENDING",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "SECONDLY"
+          ],
+          "pred": [
+            "SECOND"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "ABOUT"
+          ],
+          "pred": [
+            "ON"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "THE"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), replace(1->1), delete(1->0)",
+      "notes": ""
+    },
+    {
+      "row": 18,
+      "sample_id": "test_71",
+      "audio_path": "analysis/label_audit/audio/row18_test_71.wav",
+      "wer_pct": 12.5,
+      "reference_text": "THE ECONOMIC BURDEN OF THESE DISEASES IS PUTTING PRESSURE ON THE MEMBER STATES AND THE COSTS SIGNIFICANTLY INCREASE WITH THE PROGRESSION OF THE DISEASES",
+      "prediction_text": "THE ECONOMIC BURDEN OF THESE DISEASES IS PUTTING PRESSURE ON THE MEMBER STATES AND THE COST SIGNIFICANTLY INCREASES WITH THE PROGRESSION OF THE DISEASE",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "COSTS"
+          ],
+          "pred": [
+            "COST"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "INCREASE"
+          ],
+          "pred": [
+            "INCREASES"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "DISEASES"
+          ],
+          "pred": [
+            "DISEASE"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 3 replaced, 0 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 19,
+      "sample_id": "test_199",
+      "audio_path": "analysis/label_audit/audio/row19_test_199.wav",
+      "wer_pct": 12.5,
+      "reference_text": "A GOVERNMENT THAT HAS SHOWN ITS DISRESPECT FOR MOST OF OUR VALUES FOR ALMOST FOUR DECADES",
+      "prediction_text": "A GOVERNMENT THAT HAS SHOWN ITS DISREGARD FOR THE MOST OF OUR VALUES FOR ALMOST FOUR DECADES",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "DISRESPECT"
+          ],
+          "pred": [
+            "DISREGARD"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B5",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), insert(0->1)",
+      "notes": ""
+    },
+    {
+      "row": 20,
+      "sample_id": "test_137",
+      "audio_path": "analysis/label_audit/audio/row20_test_137.wav",
+      "wer_pct": 12.0,
+      "reference_text": "WE ARE SENDING THE MESSAGE THAT A SOCIETY CAN ONLY HAVE A HEALTHY ECONOMY WHEN ITS MEMBERS ARE ABLE TO CONTRIBUTE FULLY TO ITS DEVELOPMENT",
+      "prediction_text": "WE ARE SENDING THE MESSAGE THAT SOCIETY CAN HAVE A HEALTHY ECONOMY ONLY WHEN ITS MEMBERS ARE ABLE TO CONTRIBUTE FULLY TO ITS DEVELOPMENT",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "A"
+          ],
+          "pred": []
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "ONLY"
+          ],
+          "pred": []
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "ONLY"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 0 replaced, 2 dropped, 1 added",
+      "notes": ""
+    },
+    {
+      "row": 21,
+      "sample_id": "test_26",
+      "audio_path": "analysis/label_audit/audio/row21_test_26.wav",
+      "wer_pct": 11.8,
+      "reference_text": "HOW ARE WE GOING TO MEASURE WHETHER THE INFLUX IS HIGH NOT HIGH OR HIGH ENOUGH WHEN IT IS ALL OVER THE EUROPEAN UNION HAS TO DECIDE WHETHER IT WANTS TO ACT OR REACT",
+      "prediction_text": "HOW ARE WE GOING TO MEASURE WHETHER THE INFLATION IS HIGH NOT HIGH HIGH ENOUGH WHEN IT'S ALL OVER THE EUROPEAN UNION HAS TO DECIDE WHETHER IT WANTS TO ACT OR REACT",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "INFLUX"
+          ],
+          "pred": [
+            "INFLATION"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "OR"
+          ],
+          "pred": []
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "IT",
+            "IS"
+          ],
+          "pred": [
+            "IT'S"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B5",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), delete(1->0), replace(2->1)",
+      "notes": ""
+    },
+    {
+      "row": 22,
+      "sample_id": "test_82",
+      "audio_path": "analysis/label_audit/audio/row22_test_82.wav",
+      "wer_pct": 11.8,
+      "reference_text": "I AGREE WITH THE INTENTION TO ENSURE THAT END USERS WILL BE ABLE TO RECEIVE FULL INFORMATION ON THE LABEL EVEN IF THE PRODUCT IS BOUGHT AT A DISTANCE VIA THE INTERNET OR TELEMARKETING",
+      "prediction_text": "I AGREE WITH THE INTENTION TO ENSURE THAT END USERS WILL BE ABLE TO RECEIVE THE FULL INFORMATION OF THE LABEL EVEN IF THE PRODUCT IS BOUGHT BY DISTANCE VIA THE INTERNET OR TELEMARKETING",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "ON"
+          ],
+          "pred": [
+            "OF"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "AT",
+            "A"
+          ],
+          "pred": [
+            "BY"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1), replace(2->1)",
+      "notes": ""
+    },
+    {
+      "row": 23,
+      "sample_id": "test_129",
+      "audio_path": "analysis/label_audit/audio/row23_test_129.wav",
+      "wer_pct": 11.6,
+      "reference_text": "ENDING UNJUSTIFIED GEO BLOCKING PRACTICES IS ONE CONCRETE STEP IN THE RIGHT DIRECTION BUT I BELIEVE IT SHOULD BE DONE IN A WAY THAT DOES NOT HAMPER SMES AND START UPS AND DOES NOT RAISE PRICES FOR CONSUMERS ESPECIALLY IN NEWER MEMBER STATES",
+      "prediction_text": "ENDING UNJUSTIFIED GEO BLOCKING PRACTICES IS ONE CONCRETE STEP IN THE RIGHT DIRECTION BUT I BELIEVE IT SHOULD BE DONE IN A WAY THAT DOES NOT HAMPER SMES AND STARTUPS AS WELL AS DOES NOT RAISE PRICES FOR CONSUMERS ESPECIALLY NEWER MEMBER STATES",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "START",
+            "UPS",
+            "AND"
+          ],
+          "pred": [
+            "STARTUPS",
+            "AS",
+            "WELL",
+            "AS"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "IN"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(3->4), delete(1->0)",
+      "notes": ""
+    },
+    {
+      "row": 24,
+      "sample_id": "test_197",
+      "audio_path": "analysis/label_audit/audio/row24_test_197.wav",
+      "wer_pct": 11.6,
+      "reference_text": "THIRDLY THE COMMISSION DELEGATED REGULATION OF THIRTY SEPTEMBER TWO THOUSAND AND THIRTEEN ON THE MODEL FINANCIAL REGULATION FOR PUBLIC PRIVATE PARTNERSHIP BODIES WILL ENTER INTO FORCE IN ORDER TO ALLOW JOINT UNDERTAKINGS TO BENEFIT FROM THE SIMPLIFICATIONS INTRODUCED IN THE NEW FINANCIAL FRAMEWORK",
+      "prediction_text": "THREE COMMISSION'S DELEGATED REGULATION OF THIRTY SEPTEMBER TWO THOUSAND AND THIRTEEN ON THE MODEL FINANCIAL REGULATION FOR THE PUBLIC PRIVATE PARTNERSHIP BODIES WILL ENTER INTO FORCE IN ORDER TO ALLOW THE JOINT UNDERTAKINGS TO BENEFIT FROM THE SIMPLIFICATIONS INTRODUCED IN THE NEW FINANCIAL FRAMEWORK",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "THIRDLY",
+            "THE",
+            "COMMISSION"
+          ],
+          "pred": [
+            "THREE",
+            "COMMISSION'S"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B5",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(3->2), insert(0->1), insert(0->1)",
+      "notes": ""
+    },
+    {
+      "row": 25,
+      "sample_id": "test_75",
+      "audio_path": "analysis/label_audit/audio/row25_test_75.wav",
+      "wer_pct": 11.1,
+      "reference_text": "TWO THOUSAND AND SEVENTEEN WAS THE YEAR WHEN WE SAW OBSTACLES TO RESOLVABILITY OF THE VENETIAN BANKS AND THE FIRST RESOLUTION UNDER THE EU FRAMEWORK THE POPULAR CASE WHICH SHOWS THAT FURTHER TRANSPARENCY IS CLEARLY NEEDED",
+      "prediction_text": "TWO THOUSAND AND SEVENTEEN WAS THE YEAR WHEN WE SAW THE OBSTACLES TO RESOLVABILITY OF THE VENETIAN BANKS AND THE FIRST RESOLUTION UNDER THE EU FRAMEWORK THE POPULAR CASE HAS SHOWN FURTHER TRANSPARENCY IS CLEARLY NEEDED",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "WHICH",
+            "SHOWS",
+            "THAT"
+          ],
+          "pred": [
+            "HAS",
+            "SHOWN"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(3->2)",
+      "notes": ""
+    },
+    {
+      "row": 26,
+      "sample_id": "test_108",
+      "audio_path": "analysis/label_audit/audio/row26_test_108.wav",
+      "wer_pct": 10.0,
+      "reference_text": "FOUR HUNDRED AND FIFTY THREE TO FOUR FIVE HUNDRED AND FORTY SIX UNFORTUNATELY A VERY HIGH NUMBER OF HEALTH PROFESSIONALS ARE AFFECTED WITH FOUR HUNDRED AND TWENTY SEVEN DOCTORS AND NURSES SICK AND OF THOSE TWO HUNDRED AND THIRTY HAVE LOST THEIR LIVES TRYING TO SAVE THE LIVES OF OTHERS",
+      "prediction_text": "FOUR HUNDRED AND FIFTY THREE TO FOUR HUNDRED AND FIVE HUNDRED AND FORTY SIX AND UNFORTUNATELY A VERY HIGH NUMBER OF HEALTH PROFESSIONALS ARE AFFECTED FOUR HUNDRED AND TWENTY SEVEN DOCTORS AND NURSES SICK AND OF THOSE TWO HUNDRED AND THIRTY LOST THEIR LIVES TRYING TO SAVE THE LIVES OF OTHERS",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "HUNDRED",
+            "AND"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "AND"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "WITH"
+          ],
+          "pred": []
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "HAVE"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B5",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->2), insert(0->1), delete(1->0), delete(1->0)",
+      "notes": ""
+    },
+    {
+      "row": 27,
+      "sample_id": "test_147",
+      "audio_path": "analysis/label_audit/audio/row27_test_147.wav",
+      "wer_pct": 10.0,
+      "reference_text": "BY WORKING TOGETHER BY ACTING TOGETHER WE DEFINE WHO WE",
+      "prediction_text": "BY WORKING TOGETHER BY ACTING TOGETHER WE DEFINE WHO WE ARE",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "ARE"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A2",
+      "provisional_rationale": "model adds word(s) absent from label: ['ARE']",
+      "notes": ""
+    },
+    {
+      "row": 28,
+      "sample_id": "test_198",
+      "audio_path": "analysis/label_audit/audio/row28_test_198.wav",
+      "wer_pct": 10.0,
+      "reference_text": "PARLIAMENT IS ALSO APPEALING TO NATIONAL LAWMAKERS TO DISTINGUISH CLEARLY HIGHER RISK OR LOWER LIQUIDITY ASSETS FROM THOSE ASSETS WHICH ARE ELIGIBLE FOR UCITS TYPE COVERED BONDS LEAVING SME CREDITS INFRASTRUCTURE INVESTMENTS AND CONSUMER CREDITS TO A NEW INSTRUMENT WHICH AS I HAVE SAID WOULD BE CALLED EUROPEAN SECURED NOTES",
+      "prediction_text": "PARLIAMENT ALSO APPEALS TO NATIONAL LAWMAKERS TO CLEARLY DISTINGUISH HIGHER RISK OR LOWER LIQUIDITY ASSETS FROM THOSE ASSETS WHICH ARE ELIGIBLE FOR USES TYPE COVERED BONDS LEAVING SME CREDITS INFRASTRUCTURE INVESTMENTS AND CONSUMER CREDITS TO A NEW INSTRUMENT WHICH AS I HAVE SAID WOULD BE CALLED EUROPEAN SECURED NOTES",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "IS"
+          ],
+          "pred": []
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "APPEALING"
+          ],
+          "pred": [
+            "APPEALS"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "CLEARLY"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "CLEARLY"
+          ],
+          "pred": []
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "UCITS"
+          ],
+          "pred": [
+            "USES"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), replace(1->1), insert(0->1), delete(1->0), replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 29,
+      "sample_id": "test_188",
+      "audio_path": "analysis/label_audit/audio/row29_test_188.wav",
+      "wer_pct": 9.5,
+      "reference_text": "EVEN THE UK GOVERNMENT'S OWN SO CALLED BALANCE OF COMPETENCES REVIEW SHOWS THAT FOREIGN POLICY COMPETENCES REMAIN SQUARELY WITH THE MEMBER STATES AND THAT MOST OF THE EVIDENCE ARGUES STRONGLY THAT IT IS IN THE UK'S INTEREST TO WORK THROUGH THE EU",
+      "prediction_text": "EVEN THE UK GOVERNMENT'S OWN SO CALLED BALANCE OF COMPETENCES REVIEW SHOWS THAT FOREIGN POLICY COMPETENCES REMAIN SQUARELY WITH MEMBER STATES AND THAT MOST OF THE EVIDENCE ARGUES STRONGLY IN THE UK'S INTEREST TO WORK THROUGH THE EU",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "THE"
+          ],
+          "pred": []
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "THAT",
+            "IT",
+            "IS"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), delete(3->0)",
+      "notes": ""
+    },
+    {
+      "row": 30,
+      "sample_id": "test_22",
+      "audio_path": "analysis/label_audit/audio/row30_test_22.wav",
+      "wer_pct": 8.8,
+      "reference_text": "IF THE COMMISSION'S PLAN IS AN EXAMPLE FOR THE REST OF THE MEDITERRANEAN AND THEY LOBBY FOR IT THE WAY THEY LOBBIED FOR THIS REPORT THEN I DON'T KNOW WHY WE ALL ARE HERE",
+      "prediction_text": "IF THE COMMISSION'S PLAN IS AN EXAMPLE FOR THE REST OF THE MEDITERRANEAN AND THEY LOBBIED FOR IT THE WAY THEY LOBBIED FOR THIS REPORT THEN I DON'T KNOW WHY WE ARE ALL HERE",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "LOBBY"
+          ],
+          "pred": [
+            "LOBBIED"
+          ]
+        },
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "ARE"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "ARE"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 1 replaced, 1 dropped, 1 added",
+      "notes": ""
+    },
+    {
+      "row": 31,
+      "sample_id": "test_4",
+      "audio_path": "analysis/label_audit/audio/row31_test_4.wav",
+      "wer_pct": 8.7,
+      "reference_text": "AND COULD YOU PLEASE ALSO TELL ME WHAT IN LONDON YOU ARE SUPPORTING AS MEASURES IN THE CITY AGAINST THE INTERNATIONAL MONEYLAUNDERING SYSTEMS",
+      "prediction_text": "AND COULD YOU PLEASE ALSO TELL ME WHAT IN LONDON YOU ARE SUPPORTING AS MEASURES IN THE CITY AGAINST THE INTERNATIONAL MONEY LAUNDERING SYSTEMS",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "MONEYLAUNDERING"
+          ],
+          "pred": [
+            "MONEY",
+            "LAUNDERING"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B1",
+      "provisional_rationale": "phonetically/orthographically close substitutions: ['MONEYLAUNDERING->MONEY LAUNDERING']",
+      "notes": ""
+    },
+    {
+      "row": 32,
+      "sample_id": "test_40",
+      "audio_path": "analysis/label_audit/audio/row32_test_40.wav",
+      "wer_pct": 8.3,
+      "reference_text": "MS RA THUN FOR HER COMMITMENT AND A GREAT JOB DURING THE NEGOTIATION PROCESS WITH THE COMMISSION AND THE COUNCIL DURING THE ESTONIAN PRESIDENCY",
+      "prediction_text": "MS ROSA THUN FOR HER COMMITMENT AND A GREAT JOB DURING THE NEGOTIATION PROCESS WITH THE COMMISSION AND A COUNCIL DURING THE ESTONIAN PRESIDENCY",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "RA"
+          ],
+          "pred": [
+            "ROSA"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "THE"
+          ],
+          "pred": [
+            "A"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A4",
+      "provisional_rationale": "replacement token also appears elsewhere in clip text (Malta pattern): ['THE->A']",
+      "notes": ""
+    },
+    {
+      "row": 33,
+      "sample_id": "test_88",
+      "audio_path": "analysis/label_audit/audio/row33_test_88.wav",
+      "wer_pct": 8.3,
+      "reference_text": "THE THRUST OF THIS DISCHARGE REPORT IS CRYSTAL CLEAR THE ECONOMIC AND FINANCIAL CRISIS HAS GREATLY INCREASED THE DEMAND FOR HIGH QUALITY PUBLIC SPENDING",
+      "prediction_text": "THE THRUST OF THIS DISCHARGED REPORT IS CRYSTAL CLEAR THE ECONOMIC AND FINANCIAL CRISIS HAS GREATLY RISEN THE DEMAND FOR HIGH QUALITY PUBLIC SPENDING",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "DISCHARGE"
+          ],
+          "pred": [
+            "DISCHARGED"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "INCREASED"
+          ],
+          "pred": [
+            "RISEN"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 34,
+      "sample_id": "test_117",
+      "audio_path": "analysis/label_audit/audio/row34_test_117.wav",
+      "wer_pct": 8.3,
+      "reference_text": "WE SHOULD CONTINUE WITH THE EFFORTS TO INVOLVE THOSE COUNTRIES MORE INTIMATELY",
+      "prediction_text": "WE SHOULD CONTINUE WITH OUR EFFORTS TO INVOLVE THOSE COUNTRIES MORE INTIMATELY",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "THE"
+          ],
+          "pred": [
+            "OUR"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B4",
+      "provisional_rationale": "fluent but dissimilar substitutions: ['THE->OUR']",
+      "notes": ""
+    },
+    {
+      "row": 35,
+      "sample_id": "test_62",
+      "audio_path": "analysis/label_audit/audio/row35_test_62.wav",
+      "wer_pct": 8.0,
+      "reference_text": "AT THE SAME TIME THE NEW DIRECTIVE WILL PROVIDE A MINIMUM LEVEL OF PROTECTION FOR LINKED TRAVEL ARRANGEMENTS WHICH ARE LOOSER COMBINATIONS OF TRAVEL SERVICES",
+      "prediction_text": "AT THE SAME TIME THE NEW DIRECTIVE WOULD PROVIDE A MINIMUM LEVEL OF PROTECTION FOR LINKED TRAVEL ARRANGEMENTS WHICH ARE LOSER COMBINATIONS OF TRAVEL SERVICES",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "WILL"
+          ],
+          "pred": [
+            "WOULD"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "LOOSER"
+          ],
+          "pred": [
+            "LOSER"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 2 replaced, 0 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 36,
+      "sample_id": "test_9",
+      "audio_path": "analysis/label_audit/audio/row36_test_9.wav",
+      "wer_pct": 7.7,
+      "reference_text": "AND NATIONAL COMPETITION AUTHORITIES BUT THE REPORT ALSO SAYS VERY CLEARLY THAT THIS INDEPENDENCE IS STRONGLY LINKED TO THE AVAILABILITY OF HUMAN AND FINANCIAL RESOURCES HOWEVER",
+      "prediction_text": "AND NATIONAL COMPETITION AUTHORITIES BUT ALSO THE REPORT SAYS VERY CLEARLY THAT THIS INDEPENDENCE IS STRONGLY LINKED TO THE AVAILABILITY OF HUMAN AND FINANCIAL RESOURCES HOWEVER",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "ALSO"
+          ]
+        },
+        {
+          "op": "delete",
+          "ref": [
+            "ALSO"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 0 replaced, 1 dropped, 1 added",
+      "notes": ""
+    },
+    {
+      "row": 37,
+      "sample_id": "test_99",
+      "audio_path": "analysis/label_audit/audio/row37_test_99.wav",
+      "wer_pct": 7.7,
+      "reference_text": "THE SERVICES MUST NOT STOP AT THE INTERNAL BORDERS OF THE EUROPEAN UNION",
+      "prediction_text": "THE SERVICES MUST NOT STOP ON THE INTERNAL BORDERS OF THE EUROPEAN UNION",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "AT"
+          ],
+          "pred": [
+            "ON"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 38,
+      "sample_id": "test_150",
+      "audio_path": "analysis/label_audit/audio/row38_test_150.wav",
+      "wer_pct": 7.4,
+      "reference_text": "I WANTED TO PAY TRIBUTE TO THE MALTESE GOVERNMENT AND TO THE PRIME MINISTER I WANT TO PAY TRIBUTE TO WHAT THE PRIME MINISTER OF MALTA DID",
+      "prediction_text": "I WANTED TO PAY TRIBUTE TO THE MALTESE GOVERNMENT AND TO THE PRIME MINISTER OF MALTA. I WANT TO PAY TRIBUTE TO WHAT THE PRIME MINISTER OF MALTA DID",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "OF",
+            "MALTA."
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B3",
+      "provisional_rationale": "model inserts word(s) not in label: ['OF', 'MALTA.']",
+      "notes": ""
+    },
+    {
+      "row": 39,
+      "sample_id": "test_28",
+      "audio_path": "analysis/label_audit/audio/row39_test_28.wav",
+      "wer_pct": 6.7,
+      "reference_text": "WE ARE CONVINCED THAT IT'S VERY USEFUL FOR THE QUALITY OF THE FUNDING PROGRAMMES IT IS BASED ON A NEW FOCUS ON RESULTS AND MILESTONES THAT HAVE TO BE ACHIEVED",
+      "prediction_text": "WE ARE CONVINCED THAT IT IS VERY USEFUL FOR THE QUALITY OF THE FUNDING PROGRAMMES IT IS BASED ON A NEW FOCUS ON RESULTS AND MILESTONES THAT HAVE TO BE ACHIEVED",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "IT'S"
+          ],
+          "pred": [
+            "IT",
+            "IS"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->2)",
+      "notes": ""
+    },
+    {
+      "row": 40,
+      "sample_id": "test_180",
+      "audio_path": "analysis/label_audit/audio/row40_test_180.wav",
+      "wer_pct": 6.7,
+      "reference_text": "VICE PRESIDENT TAJANI HAS STATED THAT INDUSTRY IS AT THE HEART OF EUROPE AND IS INDISPENSABLE FOR FINDING SOLUTIONS TO THE CHALLENGES OF OUR SOCIETY TODAY AND IN THE FUTURE",
+      "prediction_text": "VICE PRESIDENT AYANIS STATED THAT INDUSTRY IS AT THE HEART OF EUROPE AND IS INDISPENSABLE FOR FINDING SOLUTIONS TO THE CHALLENGES OF OUR SOCIETY TODAY AND IN THE FUTURE",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "TAJANI",
+            "HAS"
+          ],
+          "pred": [
+            "AYANIS"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(2->1)",
+      "notes": ""
+    },
+    {
+      "row": 41,
+      "sample_id": "test_35",
+      "audio_path": "analysis/label_audit/audio/row41_test_35.wav",
+      "wer_pct": 6.2,
+      "reference_text": "THE COMMISSION WILL CONTINUE WORKING WITH YOU AS ONE OF OUR PRINCIPAL PARTNERS OF THE YEAR",
+      "prediction_text": "THE COMMISSION WILL CONTINUE WORKING WITH YOU AS ONE OF OUR PRINCIPAL PARTNERS FOR THE YEAR",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "OF"
+          ],
+          "pred": [
+            "FOR"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B4",
+      "provisional_rationale": "fluent but dissimilar substitutions: ['OF->FOR']",
+      "notes": ""
+    },
+    {
+      "row": 42,
+      "sample_id": "test_50",
+      "audio_path": "analysis/label_audit/audio/row42_test_50.wav",
+      "wer_pct": 6.2,
+      "reference_text": "THE GENERAL PRINCIPLE OF RECOGNITION MEANS THAT ALL JUDICIAL DECISIONS IN CRIMINAL MATTERS TAKEN IN ONE MEMBER STATE SHALL BE AND NORMALLY WILL BE DIRECTLY RECOGNISED AND ENFORCED BY ANOTHER MEMBER STATE",
+      "prediction_text": "THE GENERAL PRINCIPLE OF MUTUAL RECOGNITION MEANING THAT ALL JUDICIAL DECISIONS IN CRIMINAL MATTERS TAKEN IN ONE MEMBER STATE SHALL BE AND NORMALLY WILL BE DIRECTLY RECOGNISED AND ENFORCED BY ANOTHER MEMBER STATE",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "MUTUAL"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "MEANS"
+          ],
+          "pred": [
+            "MEANING"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 43,
+      "sample_id": "test_24",
+      "audio_path": "analysis/label_audit/audio/row43_test_24.wav",
+      "wer_pct": 6.2,
+      "reference_text": "BUT ULTIMATELY IN MY VIEW MY HOPE IS THAT SCOTLAND WILL CHOOSE TO BECOME A NORMAL INDEPENDENT NATION AGAIN ABLE TO SET AND PURSUE OUR OWN PRIORITIES AND NEGOTIATIONS WITH OUR NEIGHBOURS",
+      "prediction_text": "BUT ULTIMATELY IN MY VIEW MY HOPE IS THAT SCOTLAND WILL CHOOSE TO BECOME A NORMAL INDEPENDENT NATION AGAIN ABLE TO SET AND TO PURSUE OUR OWN PRIORITIES IN NEGOTIATIONS WITH OUR NEIGHBOURS",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "TO"
+          ]
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "AND"
+          ],
+          "pred": [
+            "IN"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 44,
+      "sample_id": "test_141",
+      "audio_path": "analysis/label_audit/audio/row44_test_141.wav",
+      "wer_pct": 6.2,
+      "reference_text": "THIS IS YOUR MOMENT TO SAVE YOUR RECORD ON THIS FILE AND THAT OF ALL EUROPEANS",
+      "prediction_text": "THIS IS YOUR MOMENT TO SAVE YOUR RECORD AND ON THIS FILE AND THAT OF ALL EUROPEANS",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "AND"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A2",
+      "provisional_rationale": "model adds word(s) absent from label: ['AND']",
+      "notes": ""
+    },
+    {
+      "row": 45,
+      "sample_id": "test_96",
+      "audio_path": "analysis/label_audit/audio/row45_test_96.wav",
+      "wer_pct": 6.1,
+      "reference_text": "SOLIDARITY AND VOLUNTEERING ARE VALUES THAT I AS A SOCIAL DEMOCRAT AND HUMAN BEING STRONGLY SUPPORT I HONESTLY THANK AND EXTEND MY GRATITUDE TO EVERYONE WHO SELFLESSLY HELPS FELLOW PEOPLE AND THE COMMUNITIES",
+      "prediction_text": "SOLIDARITY AND VOLUNTEERING ARE VALUES THAT I AS A SOCIAL DEMOCRAT AND HUMAN BEING STRONGLY SUPPORT I HONESTLY THANK AND EXTEND MY GRATITUDE TO EVERYONE WHO SELFlessly HELPED FELLOW PEOPLE AND THE COMMUNITIES",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "HELPS"
+          ],
+          "pred": [
+            "HELPED"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 46,
+      "sample_id": "test_57",
+      "audio_path": "analysis/label_audit/audio/row46_test_57.wav",
+      "wer_pct": 5.9,
+      "reference_text": "LET US PROVE TOGETHER NOT COMPETING WITH EACH OTHER BUT TOGETHER THAT THIS IS NOT THE CASE",
+      "prediction_text": "LET US PROVE TOGETHER NOT COMPETING WITH EACH OTHER BUT TOGETHER THAT THAT IS NOT THE CASE",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "THIS"
+          ],
+          "pred": [
+            "THAT"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A4",
+      "provisional_rationale": "replacement token also appears elsewhere in clip text (Malta pattern): ['THIS->THAT']",
+      "notes": ""
+    },
+    {
+      "row": 47,
+      "sample_id": "test_21",
+      "audio_path": "analysis/label_audit/audio/row47_test_21.wav",
+      "wer_pct": 5.9,
+      "reference_text": "ALMOST NINE HUNDRED ZERO PEOPLE ARE TRAFFICKED IN THE EU EACH YEAR FOR LABOUR AND SEXUAL EXPLOITATION",
+      "prediction_text": "ALMOST NINE HUNDRED ZERO PEOPLE ARE TRAFFICKED IN THE EU EACH YEAR FOR LABOUR AND FOR SEXUAL EXPLOITATION",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "FOR"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B3",
+      "provisional_rationale": "model inserts word(s) not in label: ['FOR']",
+      "notes": ""
+    },
+    {
+      "row": 48,
+      "sample_id": "test_74",
+      "audio_path": "analysis/label_audit/audio/row48_test_74.wav",
+      "wer_pct": 5.6,
+      "reference_text": "TODAY OUR PARLIAMENT IS PAYING SPECIAL ATTENTION TO THE CURRENT SITUATION BY ADOPTING A RESOLUTION ONLY ON ASHRAF",
+      "prediction_text": "TODAY OUR PARLIAMENT IS PAYING SPECIAL ATTENTION TO THE ACTUAL SITUATION BY ADOPTING A RESOLUTION ONLY ON ASHRAF",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "CURRENT"
+          ],
+          "pred": [
+            "ACTUAL"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 49,
+      "sample_id": "test_183",
+      "audio_path": "analysis/label_audit/audio/row49_test_183.wav",
+      "wer_pct": 5.6,
+      "reference_text": "VOTES SHOULD NOT BE GAINED BY PLAYING ON PEOPLE'S FEARS AND TRAUMAS BECAUSE ELECTIONS PASS BUT TENSIONS REMAIN",
+      "prediction_text": "VOTES SHOULD NOT BE GAINED BY PLAYING ON PEOPLE'S FEARS AND TRAUMAS BECAUSE ELECTIONS PASS BUT THE TENSIONS REMAIN",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A2",
+      "provisional_rationale": "model adds word(s) absent from label: ['THE']",
+      "notes": ""
+    },
+    {
+      "row": 50,
+      "sample_id": "test_25",
+      "audio_path": "analysis/label_audit/audio/row50_test_25.wav",
+      "wer_pct": 5.3,
+      "reference_text": "THIS MEANT THE ELIMINATION OF THE LEADERS AND ELITES OF A NATION FIGHTING FOR ITS OWN AND EUROPE'S FREEDOM",
+      "prediction_text": "THIS MEANT THE ELIMINATION OF THE LEADERS AND ELITES OF THE NATION FIGHTING FOR ITS OWN AND EUROPE'S FREEDOM",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "A"
+          ],
+          "pred": [
+            "THE"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 51,
+      "sample_id": "test_173",
+      "audio_path": "analysis/label_audit/audio/row51_test_173.wav",
+      "wer_pct": 5.0,
+      "reference_text": "IN THE FINAL TEXT THANKS TO OUR WORK MANY SAFEGUARDS HAVE BEEN ADDED AND FUNDAMENTAL RIGHTS WILL BE FULLY PROTECTED",
+      "prediction_text": "IN THE FINAL TEXT THANKS TO OUR WORK MANY SAYCARES HAVE BEEN ADDED AND FUNDAMENTAL RIGHTS WILL BE FULLY PROTECTED",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "SAFEGUARDS"
+          ],
+          "pred": [
+            "SAYCARES"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B1",
+      "provisional_rationale": "phonetically/orthographically close substitutions: ['SAFEGUARDS->SAYCARES']",
+      "notes": ""
+    },
+    {
+      "row": 52,
+      "sample_id": "test_31",
+      "audio_path": "analysis/label_audit/audio/row52_test_31.wav",
+      "wer_pct": 4.8,
+      "reference_text": "EIB I BELIEVE THAT THE ECONOMIC FINANCIAL AND INVESTMENT ENVIRONMENT IN THE EU IS MUCH BETTER TODAY THAN IT WAS IN TWO THOUSAND AND FIFTEEN AND THAT PART OF THE CREDIT FOR THAT CONSIDERABLE IMPROVEMENT BELONGS TO THE EIB AND ITS POLICIES",
+      "prediction_text": "I BELIEVE THAT THE ECONOMIC FINANCIAL AND INVESTMENT ENVIRONMENT IN THE EU IS MUCH BETTER TODAY THAN IT WAS IN TWO THOUSAND AND FIFTEEN AND THAT PART OF THE CREDIT FOR THE CONSIDERABLE IMPROVEMENT BELONGS TO THE EIB AND ITS POLICIES",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "EIB"
+          ],
+          "pred": []
+        },
+        {
+          "op": "replace",
+          "ref": [
+            "THAT"
+          ],
+          "pred": [
+            "THE"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 53,
+      "sample_id": "test_127",
+      "audio_path": "analysis/label_audit/audio/row53_test_127.wav",
+      "wer_pct": 4.8,
+      "reference_text": "FURTHER ENCOURAGE THE UN'S EFFORTS TO BRING ABOUT PEACE IN AFGHANISTAN AND TO OVERCOME THE FRAGILE SECURITY ENVIRONMENT IN THE COUNTRY",
+      "prediction_text": "FURTHER ENCOURAGE THE UN EFFORTS TO BRING ABOUT PEACE IN AFGHANISTAN AND TO OVERCOME THE FRAGILE SECURITY ENVIRONMENT IN THE COUNTRY",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "UN'S"
+          ],
+          "pred": [
+            "UN"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 54,
+      "sample_id": "test_131",
+      "audio_path": "analysis/label_audit/audio/row54_test_131.wav",
+      "wer_pct": 4.5,
+      "reference_text": "I WOULD LIKE TO SEE HOW EIB INSTRUMENTS ARE MAKING THE ACHIEVEMENT OF EUROPE TWO THOUSAND AND TWENTY GOALS BETTER AND FASTER",
+      "prediction_text": "I WOULD LIKE TO SEE HOW EIB INSTRUMENTS ARE MAKING THE ACHIEVEMENT OF THE EUROPE TWO THOUSAND AND TWENTY GOALS BETTER AND FASTER",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 0 replaced, 0 dropped, 1 added",
+      "notes": ""
+    },
+    {
+      "row": 55,
+      "sample_id": "test_190",
+      "audio_path": "analysis/label_audit/audio/row55_test_190.wav",
+      "wer_pct": 4.3,
+      "reference_text": "THE COMMISSION WILL STUDY THE MOST APPROPRIATE MEANS TO ACHIEVE THIS OBJECTIVE IN THE UNION TAKING INTO ACCOUNT INTERNATIONAL CONVENTIONS ON THE MATTER",
+      "prediction_text": "THE COMMISSION WILL STUDY THE MOST APPROPRIATE MEANS TO ACHIEVE THIS OBJECTIVE IN THE UNION TAKING INTO ACCOUNT THE INTERNATIONAL CONVENTIONS ON THE MATTER",
+      "word_diff": [
+        {
+          "op": "insert",
+          "ref": [],
+          "pred": [
+            "THE"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B3",
+      "provisional_rationale": "model inserts word(s) not in label: ['THE']",
+      "notes": ""
+    },
+    {
+      "row": 56,
+      "sample_id": "test_17",
+      "audio_path": "analysis/label_audit/audio/row56_test_17.wav",
+      "wer_pct": 4.2,
+      "reference_text": "NO POLISH PERSON MUST EVER DOUBT THAT THEY CAN RECEIVE A FAIR AND FREE TRIAL THERE ARE ALSO OTHER ISSUES WE HAVE TO ADDRESS",
+      "prediction_text": "NO POLISH PERSON MUST EVER DOUBT THAT THEY CAN RECEIVE A FAIR AND FREE TRIAL THERE ARE ALSO OTHER ISSUES I HAVE TO ADDRESS",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "WE"
+          ],
+          "pred": [
+            "I"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
+      "notes": ""
+    },
+    {
+      "row": 57,
+      "sample_id": "test_81",
+      "audio_path": "analysis/label_audit/audio/row57_test_81.wav",
+      "wer_pct": 4.0,
+      "reference_text": "WHY THE UNION AND IN PARTICULAR THE COMMISSION SHOULD WORK HARD TO FINALISE THE LEGAL TEXTS SO THEY CAN BE SIGNED AS SOON AS POSSIBLE",
+      "prediction_text": "WHY THE UNION IN PARTICULAR THE COMMISSION SHOULD WORK HARD TO FINALISE THE LEGAL TEXTS SO THEY CAN BE SIGNED AS SOON AS POSSIBLE",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "AND"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A6",
+      "provisional_rationale": "mixed/unclassified diff shape: delete(1->0)",
+      "notes": ""
+    },
+    {
+      "row": 58,
+      "sample_id": "test_92",
+      "audio_path": "analysis/label_audit/audio/row58_test_92.wav",
+      "wer_pct": 3.7,
+      "reference_text": "IT IS HAPPENING ACROSS EUROPE AND THE SILENCE SURROUNDING IT HAS MANY PARALLELS WITH THE EXPLOITATION AND TRAFFICKING OF YOUNG GIRLS ACROSS MANY TOWNS IN NORTHERN ENGLAND",
+      "prediction_text": "WHAT IS HAPPENING ACROSS EUROPE AND THE SILENCE SURROUNDING IT HAS MANY PARALLELS WITH THE EXPLOITATION AND TRAFFICKING OF YOUNG GIRLS ACROSS MANY TOWNS IN NORTHERN ENGLAND",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "IT"
+          ],
+          "pred": [
+            "WHAT"
+          ]
+        }
+      ],
+      "original_disposition": "ambiguous",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 59,
+      "sample_id": "test_169",
+      "audio_path": "analysis/label_audit/audio/row59_test_169.wav",
+      "wer_pct": 3.7,
+      "reference_text": "THAT SAID AND GIVEN THE ABSENCE OF RELEVANT TREATY PROVISIONS THE COUNCIL HAS NO FURTHER POWER TO TAKE ACTION IN THE AREAS MENTIONED BY THE HONOURABLE MEMBERS",
+      "prediction_text": "THAT SAID AND GIVEN THE ABSENCE OF RELEVANT TREATY PROVISION THE COUNCIL HAS NO FURTHER POWER TO TAKE ACTION IN THE AREAS MENTIONED BY THE HONOURABLE MEMBERS",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "PROVISIONS"
+          ],
+          "pred": [
+            "PROVISION"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A3",
+      "provisional_rationale": "morphological variants (shared stems): ['PROVISIONS->PROVISION']",
+      "notes": ""
+    },
+    {
+      "row": 60,
+      "sample_id": "test_8",
+      "audio_path": "analysis/label_audit/audio/row60_test_8.wav",
+      "wer_pct": 2.9,
+      "reference_text": "IN THE US IT WAS A DECISION TAKEN ONLY BY ONE PERSON THE FORMER PRESIDENT OF THE UNITED STATES AGAINST THE ARTICULATED DEMOCRATIC MAJORITY OF THE US CONGRESS BY ALL OF ITS REPUBLICAN AND SOME OF ITS DEMOCRAT MEMBERS IT WAS AN AGREEMENT WITHOUT ANY BINDING OBLIGATIONS AS THE LEADERS OF IRAN VERY OPENLY AND PRECISELY MADE CLEAR ON THE VERY DAY THIS SO CALLED DEAL WAS PUBLISHED",
+      "prediction_text": "IN THE US IT WAS A DECISION TAKEN ONLY BY ONE PERSON THE FORMER PRESIDENT OF THE UNITED STATES AGAINST THE ARTICULATED DEMOCRATIC MAJORITY OF THE US CONGRESS BY ALL OF ITS REPUBLICAN AND SOME OF ITS DEMOCRAT MEMBERS IT WAS AN AGREEMENT WITHOUT ANY BINDING OBLIGATIONS AS THE LEADERS OF IRAN VERY OPENLY AND PRECISELY ON THE VERY DAY THIS SO CALLED DEAL WAS PUBLISHED",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "MADE",
+            "CLEAR"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "uncategorized",
+      "subcategory": null,
+      "provisional_subcategory": null,
+      "provisional_rationale": "diff shape: 0 replaced, 2 dropped, 0 added",
+      "notes": ""
+    },
+    {
+      "row": 61,
+      "sample_id": "test_23",
+      "audio_path": "analysis/label_audit/audio/row61_test_23.wav",
+      "wer_pct": 2.9,
+      "reference_text": "IN THE US IT WAS A DECISION TAKEN ONLY BY ONE PERSON THE FORMER PRESIDENT OF THE UNITED STATES AGAINST THE ARTICULATED DEMOCRATIC MAJORITY OF THE US CONGRESS BY ALL OF ITS REPUBLICAN AND SOME OF ITS DEMOCRAT MEMBERS IT WAS AN AGREEMENT WITHOUT ANY BINDING OBLIGATIONS AS THE LEADERS OF IRAN VERY OPENLY AND PRECISELY MADE CLEAR ON THE VERY DAY THIS SO CALLED DEAL WAS PUBLISHED",
+      "prediction_text": "IN THE US IT WAS A DECISION TAKEN ONLY BY ONE PERSON THE FORMER PRESIDENT OF THE UNITED STATES AGAINST THE ARTICULATED DEMOCRATIC MAJORITY OF THE US CONGRESS BY ALL OF ITS REPUBLICAN AND SOME OF ITS DEMOCRAT MEMBERS IT WAS AN AGREEMENT WITHOUT ANY BINDING OBLIGATIONS AS THE LEADERS OF IRAN VERY OPENLY AND PRECISELY ON THE VERY DAY THIS SO CALLED DEAL WAS PUBLISHED",
+      "word_diff": [
+        {
+          "op": "delete",
+          "ref": [
+            "MADE",
+            "CLEAR"
+          ],
+          "pred": []
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B2",
+      "provisional_rationale": "model omits label word(s): ['MADE', 'CLEAR']",
+      "notes": ""
+    },
+    {
+      "row": 62,
+      "sample_id": "test_67",
+      "audio_path": "analysis/label_audit/audio/row62_test_67.wav",
+      "wer_pct": 2.6,
+      "reference_text": "OUR RESOLUTION AND THIS IS THE GOAL OF THIS DEBATE CALLS TO WORK CLOSELY TOGETHER TO MINIMISE THE HEALTH RISKS FOR STAFF AND LEARNERS AND TO MAXIMISE THE CHANCES THAT INPERSON EDUCATION AND TRAINING IS SAFE AND CAN CONTINUE",
+      "prediction_text": "OUR RESOLUTION AND THIS IS THE GOAL OF THIS DEBATE CALLS TO WORK CLOSELY TOGETHER TO MINIMISE THE HEALTH RISKS FOR STAFF AND LEARNERS AND TO MAXIMISE THE CHANCES THAT INPERSONAL EDUCATION AND TRAINING IS SAFE AND CAN CONTINUE",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "INPERSON"
+          ],
+          "pred": [
+            "INPERSONAL"
+          ]
+        }
+      ],
+      "original_disposition": "label_wrong_model_right",
+      "subcategory": null,
+      "provisional_subcategory": "A3",
+      "provisional_rationale": "morphological variants (shared stems): ['INPERSON->INPERSONAL']",
+      "notes": ""
+    },
+    {
+      "row": 63,
+      "sample_id": "test_90",
+      "audio_path": "analysis/label_audit/audio/row63_test_90.wav",
+      "wer_pct": 2.4,
+      "reference_text": "TWO THOUSAND AND SEVEN I THINK THAT IT IS IMPORTANT THAT THE COUNCIL CAN SEE THE BROAD SUPPORT FROM THIS PARLIAMENT BEHIND OUR DEMANDS TO THE COUNCIL ON MORE COOPERATION WITH PARLIAMENT AND ITS COMPETENT COMMITTEES ON THE NEXT DISCHARGE PROCEDURE",
+      "prediction_text": "TWO THOUSAND AND SEVEN I THINK THAT IT IS IMPORTANT THAT THE COUNCIL CAN SEE THE BROAD SUPPORT FROM THIS PARLIAMENT BEHIND OUR DEMANDS TO THE COUNCIL FOR MORE COOPERATION WITH PARLIAMENT AND ITS COMPETENT COMMITTEES ON THE NEXT DISCHARGE PROCEDURE",
+      "word_diff": [
+        {
+          "op": "replace",
+          "ref": [
+            "ON"
+          ],
+          "pred": [
+            "FOR"
+          ]
+        }
+      ],
+      "original_disposition": "true_model_error",
+      "subcategory": null,
+      "provisional_subcategory": "B4",
+      "provisional_rationale": "fluent but dissimilar substitutions: ['ON->FOR']",
+      "notes": ""
+    }
+  ]
+}
