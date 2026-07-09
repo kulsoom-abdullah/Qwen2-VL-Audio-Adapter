@@ -208,6 +208,18 @@ def diff_shape_summary(diff):
 # ---------------------------------------------------------------------------
 
 def extract():
+    # No-clobber guard: once adjudication data exists in cases.json, refuse to
+    # regenerate (which would silently discard hand-entered labels).
+    if os.path.exists(CASES_JSON) and "--force" not in sys.argv:
+        with open(CASES_JSON) as fh:
+            existing = json.load(fh)
+        if any(c.get("subcategory") or c.get("adjudicated_disposition")
+               or (c.get("notes") or "").strip()
+               for c in existing.get("cases", [])):
+            sys.exit("REFUSING to overwrite cases.json/review.md: adjudication "
+                     "data present (subcategory/adjudicated_disposition/notes). "
+                     "Re-run with --force to discard adjudications.")
+
     with open(NOTEBOOK) as fh:
         nb = json.load(fh)
     cells = nb["cells"]
@@ -274,6 +286,7 @@ def extract():
             "prediction_text": pred_text,
             "word_diff": diff,
             "original_disposition": disposition,
+            "adjudicated_disposition": None,
             "subcategory": None,
             "provisional_subcategory": provisional,
             "provisional_rationale": rationale,

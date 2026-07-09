@@ -4,14 +4,14 @@
 
 Taxonomy — A1 spelling/orthography · A2 missing word restored · A3 grammar/agreement · A4 contextual entity resolution · A5 punctuation/format only · A6 other || B1 acoustic confusion · B2 omission · B3 insertion/hallucination · B4 fluent semantic substitution · B5 other
 
-# ⚠️ FIRST: Row 60 — the uncategorized disagreement
+# ⚠️ FIRST: Row 60 — the uncategorized disagreement — ✅ ADJUDICATED
 
 Equivalence checks — exact: **False**, case-insensitive: **False**, punctuation+case stripped: **False**.
 
-> Texts differ beyond punctuation/case — adjudicate disposition AND subcategory (it was never assigned one in the original audit).
+> **ADJUDICATED (Kulsoom, 2026-07-07):** `adjudicated_disposition: true_model_error`, `subcategory: B2` — omission of "MADE CLEAR". `original_disposition` stays frozen as `uncategorized` (historical record); final model-error count becomes 15 vs published 14 — surfaced as a reconciliation finding.
 
 ---
-## Row 60 — `test_8` (uncategorized)
+## Row 60 — `test_8` (uncategorized → adjudicated: true_model_error)
 
 *WER 2.9%* · audio: `analysis/label_audit/audio/row60_test_8.wav`
 
@@ -23,7 +23,7 @@ Equivalence checks — exact: **False**, case-insensitive: **False**, punctuatio
 
 **SHAPE:** diff shape: 0 replaced, 2 dropped, 0 added
 
-**FINAL (set in cases.json):** `subcategory: ____`   notes: ____
+**FINAL:** `adjudicated_disposition: true_model_error` · `subcategory: B2` ✅ — omission of "MADE CLEAR" (Kulsoom, 2026-07-07).
 
 # A — label wrong, model right (36)
 
@@ -685,9 +685,9 @@ Equivalence checks — exact: **False**, case-insensitive: **False**, punctuatio
 
 **DIFF:** I WANTED TO PAY TRIBUTE TO THE MALTESE GOVERNMENT AND TO THE PRIME MINISTER {+OF MALTA.+} I WANT TO PAY TRIBUTE TO WHAT THE PRIME MINISTER OF MALTA DID
 
-**PROVISIONAL:** `B3` — model inserts word(s) not in label: ['OF', 'MALTA.']
+**PROVISIONAL:** `B3` — model inserts word(s) not in label: ['OF', 'MALTA.'] *(rule suggestion — superseded by final B4)*
 
-**FINAL (set in cases.json):** `subcategory: ____`   notes: ____
+**FINAL:** `subcategory: B4` ✅ — audio-grounded resolution from later clip context, not fabrication (Kulsoom, 2026-07-07); stays in B. Full rationale in cases.json notes.
 
 ---
 ## Row 41 — `test_35` (true_model_error)

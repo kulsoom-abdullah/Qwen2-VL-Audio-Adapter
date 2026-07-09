@@ -30,7 +30,8 @@
         "B5": "other"
       }
     },
-    "label_status": "PROVISIONAL - subcategory fields are null until Kulsoom adjudicates"
+    "label_status": "IN ADJUDICATION — final: row 60 (adjudicated true_model_error/B2) and row 38 (B4); remaining 49 A/B cases pending Kulsoom",
+    "adjudication_semantics": "original_disposition is the frozen record of the original audit (never mutated); adjudicated_disposition (nullable) overrides it for all recomputed counts; subcategory holds FINAL labels only — rule-based suggestions live in provisional_subcategory/provisional_rationale."
   },
   "cases": [
     {
@@ -61,6 +62,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->2), replace(1->2)",
@@ -100,6 +102,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: delete(2->0), insert(0->1), insert(0->3)",
@@ -129,6 +132,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A2",
       "provisional_rationale": "model adds word(s) absent from label: ['SO', 'IT']",
@@ -205,6 +209,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(2->1), replace(4->1), replace(1->1), insert(0->1), insert(0->1), replace(1->1)",
@@ -234,6 +239,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), insert(0->1)",
@@ -275,6 +281,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(2->1), delete(1->0), insert(0->3)",
@@ -299,6 +306,7 @@
         }
       ],
       "original_disposition": "normalization_only",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
@@ -342,6 +350,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), replace(1->1), replace(2->1)",
@@ -373,6 +382,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1)",
@@ -421,6 +431,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 8 replaced, 0 dropped, 0 added",
@@ -456,6 +467,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(2->1), replace(2->1)",
@@ -488,6 +500,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->2), delete(1->0)",
@@ -513,6 +526,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(2->1)",
@@ -547,6 +561,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B4",
       "provisional_rationale": "fluent but dissimilar substitutions: ['TO BE->BEING', 'COMPETENCIES->COMPETENCES']",
@@ -608,6 +623,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 6 replaced, 1 dropped, 0 added",
@@ -633,6 +649,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(2->1)",
@@ -673,6 +690,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), replace(1->1), delete(1->0)",
@@ -715,6 +733,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 3 replaced, 0 dropped, 0 added",
@@ -746,6 +765,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B5",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), insert(0->1)",
@@ -782,6 +802,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 0 replaced, 2 dropped, 1 added",
@@ -823,6 +844,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B5",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), delete(1->0), replace(2->1)",
@@ -864,6 +886,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1), replace(2->1)",
@@ -900,6 +923,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(3->4), delete(1->0)",
@@ -941,6 +965,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B5",
       "provisional_rationale": "mixed/unclassified diff shape: replace(3->2), insert(0->1), insert(0->1)",
@@ -975,6 +1000,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(3->2)",
@@ -1019,6 +1045,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B5",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->2), insert(0->1), delete(1->0), delete(1->0)",
@@ -1041,6 +1068,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A2",
       "provisional_rationale": "model adds word(s) absent from label: ['ARE']",
@@ -1095,6 +1123,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), replace(1->1), insert(0->1), delete(1->0), replace(1->1)",
@@ -1126,6 +1155,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), delete(3->0)",
@@ -1164,6 +1194,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 1 replaced, 1 dropped, 1 added",
@@ -1189,6 +1220,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B1",
       "provisional_rationale": "phonetically/orthographically close substitutions: ['MONEYLAUNDERING->MONEY LAUNDERING']",
@@ -1222,6 +1254,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A4",
       "provisional_rationale": "replacement token also appears elsewhere in clip text (Malta pattern): ['THE->A']",
@@ -1255,6 +1288,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1), replace(1->1)",
@@ -1279,6 +1313,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B4",
       "provisional_rationale": "fluent but dissimilar substitutions: ['THE->OUR']",
@@ -1312,6 +1347,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 2 replaced, 0 dropped, 0 added",
@@ -1341,6 +1377,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 0 replaced, 1 dropped, 1 added",
@@ -1365,6 +1402,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
@@ -1388,10 +1426,11 @@
         }
       ],
       "original_disposition": "true_model_error",
-      "subcategory": null,
+      "adjudicated_disposition": null,
+      "subcategory": "B4",
       "provisional_subcategory": "B3",
       "provisional_rationale": "model inserts word(s) not in label: ['OF', 'MALTA.']",
-      "notes": ""
+      "notes": "Adjudicated by Kulsoom 2026-07-07: B4 (fluent semantic substitution), final. Audio-grounded resolution from later clip context — 'Malta' is spoken later in the same 30-second window — not fabrication; the same full-clip mechanism as the A-category corrections, operating past faithfulness rather than toward it. Stays in B; A4 is reserved for cases where the transcriber misheard an entity the speaker actually said. (Deterministic rule had suggested B3 — kept frozen in the provisional fields.)"
     },
     {
       "row": 39,
@@ -1413,6 +1452,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->2)",
@@ -1438,6 +1478,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(2->1)",
@@ -1462,6 +1503,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B4",
       "provisional_rationale": "fluent but dissimilar substitutions: ['OF->FOR']",
@@ -1493,6 +1535,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1)",
@@ -1524,6 +1567,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: insert(0->1), replace(1->1)",
@@ -1546,6 +1590,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A2",
       "provisional_rationale": "model adds word(s) absent from label: ['AND']",
@@ -1570,6 +1615,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
@@ -1594,6 +1640,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A4",
       "provisional_rationale": "replacement token also appears elsewhere in clip text (Malta pattern): ['THIS->THAT']",
@@ -1616,6 +1663,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B3",
       "provisional_rationale": "model inserts word(s) not in label: ['FOR']",
@@ -1640,6 +1688,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
@@ -1662,6 +1711,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A2",
       "provisional_rationale": "model adds word(s) absent from label: ['THE']",
@@ -1686,6 +1736,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
@@ -1710,6 +1761,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B1",
       "provisional_rationale": "phonetically/orthographically close substitutions: ['SAFEGUARDS->SAYCARES']",
@@ -1741,6 +1793,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: delete(1->0), replace(1->1)",
@@ -1765,6 +1818,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
@@ -1787,6 +1841,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 0 replaced, 0 dropped, 1 added",
@@ -1809,6 +1864,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B3",
       "provisional_rationale": "model inserts word(s) not in label: ['THE']",
@@ -1833,6 +1889,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: replace(1->1)",
@@ -1855,6 +1912,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A6",
       "provisional_rationale": "mixed/unclassified diff shape: delete(1->0)",
@@ -1879,6 +1937,7 @@
         }
       ],
       "original_disposition": "ambiguous",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 1 replaced, 0 dropped, 0 added",
@@ -1903,6 +1962,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A3",
       "provisional_rationale": "morphological variants (shared stems): ['PROVISIONS->PROVISION']",
@@ -1926,10 +1986,11 @@
         }
       ],
       "original_disposition": "uncategorized",
-      "subcategory": null,
+      "adjudicated_disposition": "true_model_error",
+      "subcategory": "B2",
       "provisional_subcategory": null,
       "provisional_rationale": "diff shape: 0 replaced, 2 dropped, 0 added",
-      "notes": ""
+      "notes": "Adjudicated by Kulsoom 2026-07-07: model dropped 'MADE CLEAR' — true omission (B2). Was the single uncategorized row in the original audit; original_disposition stays frozen as 'uncategorized', adjudicated_disposition carries the decision. Final model-error count becomes 15 (published 14 — surfaced as a reconciliation finding, not an error)."
     },
     {
       "row": 61,
@@ -1949,6 +2010,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B2",
       "provisional_rationale": "model omits label word(s): ['MADE', 'CLEAR']",
@@ -1973,6 +2035,7 @@
         }
       ],
       "original_disposition": "label_wrong_model_right",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "A3",
       "provisional_rationale": "morphological variants (shared stems): ['INPERSON->INPERSONAL']",
@@ -1997,6 +2060,7 @@
         }
       ],
       "original_disposition": "true_model_error",
+      "adjudicated_disposition": null,
       "subcategory": null,
       "provisional_subcategory": "B4",
       "provisional_rationale": "fluent but dissimilar substitutions: ['ON->FOR']",
