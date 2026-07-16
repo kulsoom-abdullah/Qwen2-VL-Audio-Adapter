@@ -106,6 +106,13 @@ To validate model quality on truly unseen data, I conducted a **blind manual aud
 | **❔ Uncategorized** | 1 | Disagreement not classified (sample #60) |
 | **Total** | **100** | |
 
+## 🧪 Training Infrastructure
+
+- **GPUs**: Stage 1: 1× NVIDIA A100; Stage 2: 1× NVIDIA A6000 — single GPU per stage (no distributed training)
+- **Training time**: ~18 GPU-hours total across both stages
+- **Framework**: HuggingFace Transformers (custom fork) + PEFT + BitsAndBytes; BFloat16 + FlashAttention-2; Stage 2 uses 4-bit NF4 quantization (QLoRA)
+- A rented H100 was used only for audit inference, not training.
+
 ## 💻 Usage
 
 **Important**: This model requires a modified transformers library (included in the repo files).

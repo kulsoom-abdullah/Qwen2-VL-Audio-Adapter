@@ -35,7 +35,7 @@ This project demonstrates **audio adapter integration** — a technique for exte
 **Why use adapter fusion instead of training from scratch?**
 - **Leverage Pretrained Reasoning**: Inherits the multimodal capabilities of Qwen2-VL-7B.
 - **Reuse Robust Audio Features**: Uses the frozen Whisper-Large-v3-Turbo encoder (~640M params, encoder-only).
-- **Compute Efficiency**: Achieves SOTA results with minimal compute (~18 hours total on single A100/RTX 6000).
+- **Compute Efficiency**: Achieves SOTA results with minimal compute (~18 GPU-hours total; single GPU per stage — Stage 1: 1× A100, Stage 2: 1× A6000).
 - **Parameter Efficient**: Trains only 4.6M projector params + Rank-64 LoRA adapters.
 
 ---
@@ -283,7 +283,7 @@ Qwen2-VL-Audio-Adapter/
 * **PEFT**: 4-bit QLoRA (rank-64, alpha-16 → 0.25 scaling ratio) for memory-efficient fine-tuning
 * **Audio**: Librosa + torchaudio + Whisper feature extraction
 * **Monitoring**: Weights & Biases for experiment tracking
-* **Hardware**: NVIDIA A100 40GB and RTX 6000 Ada (Lambda Labs / RunPod)
+* **Hardware (training)**: Stage 1: 1× NVIDIA A100; Stage 2: 1× NVIDIA A6000 — single GPU per stage, rented (Lambda Labs / RunPod). A rented H100 was used only for audit inference, not training.
 
 ---
 
@@ -303,7 +303,7 @@ Unlike standard "train-and-pray" projects, this repository includes rigorous san
 
 ### Hardware & Environment
 
-* **Hardware**: NVIDIA RTX 6000 Ada / A100 40GB (Lambda Labs/RunPod)
+* **Hardware (training)**: Stage 1: 1× NVIDIA A100; Stage 2: 1× NVIDIA A6000 (single GPU per stage; Lambda Labs/RunPod)
 * **Framework**: PyTorch 2.4+, Transformers (Custom Fork), PEFT
 * **Precision**: BFloat16 with Flash Attention 2
 

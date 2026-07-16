@@ -75,7 +75,7 @@ This model grafts [Whisper-Large-v3-Turbo](https://huggingface.co/openai/whisper
 ## Model Architecture
 
 - **Base Model**: Qwen2-VL-7B-Instruct (7B parameters)
-- **Audio Encoder**: Whisper-Large-v3-Turbo (frozen, 1.5B params)
+- **Audio Encoder**: Whisper-Large-v3-Turbo (frozen, encoder-only, ~640M params)
 - **Audio Projector**: Linear layer 1280 → 3584 (4.6M trainable params)
 - **Training Method**: Two-stage (projector alignment + QLoRA fine-tuning)
 
@@ -101,7 +101,7 @@ This model grafts [Whisper-Large-v3-Turbo](https://huggingface.co/openai/whisper
 - Dataset: 20K samples from SpeechBrain
 - Objective: Instruction following for transcription
 - Trainable: Audio projector + LLM (LoRA rank 64)
-- Training: 1 epoch, ~6 hours on H100
+- Training: 1 epoch on 1× NVIDIA A6000 (single GPU)
 - Final Train Loss: 0.047
 - Final Eval Loss: 0.060
 
@@ -208,16 +208,17 @@ This indicates the model is highly faithful to actual audio content, sometimes s
 
 ## Training Infrastructure
 
-- GPU: NVIDIA H100 (80GB)
-- Training time: ~6 hours for full dataset
+- GPUs: Stage 1: 1× NVIDIA A100; Stage 2: 1× NVIDIA A6000 — single GPU per stage (no distributed training)
+- Training time: ~18 GPU-hours total across both stages
 - Framework: HuggingFace Transformers + PEFT + BitsAndBytes
 - Precision: BFloat16 with 4-bit quantization (QLoRA)
+- Note: a rented H100 was used only for audit inference, not training
 
 ## Citation
 
 ```bibtex
 @misc{{qwen2-audio-grafted,
-  author = {{Your Name}},
+  author = {{Kulsoom Abdullah}},
   title = {{Qwen2-Audio: Audio Grafting for Vision-Language Models}},
   year = {{2025}},
   publisher = {{HuggingFace}},
