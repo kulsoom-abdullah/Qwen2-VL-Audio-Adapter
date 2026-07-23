@@ -120,6 +120,11 @@ if all_same:
     print("   2. Audio projector wasn't trained")
     print("   3. input_features not reaching model during generation")
     print("   4. Fork not loaded correctly")
+    # Make the failure non-recoverable: a deaf model must fail, not just print.
+    raise AssertionError(
+        "Model is DEAF: identical output for 3 distinct audio clips — the model is "
+        "ignoring audio input (see diagnostics above)."
+    )
 else:
     print("\n✅ GOOD: Outputs are DIFFERENT for different audio!")
     print("\n   This confirms the model IS using audio input.")
