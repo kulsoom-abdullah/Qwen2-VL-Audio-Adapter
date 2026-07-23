@@ -43,19 +43,25 @@ def prepare_data():
     # decode=False to bypass torchcodec issues
     train_stream = dataset["train"].cast_column("wav", Audio(decode=False))
 
-    process_stream(train_stream, EVAL_SAMPLES, EVAL_JSON, "eval", skip_count=0)
-    process_stream(train_stream, TRAIN_SAMPLES, TRAIN_JSON, "train", skip_count=EVAL_SAMPLES)
+    # One shared iterator threaded through both passes: the eval pass consumes the
+    # head of the stream, and the train pass continues from exactly where eval stopped.
+    # This keeps the two sets strictly disjoint no matter how many raw items each pass
+    # had to skip (missing audio / short text).
+    #
+    # PREVIOUS BUG: each call did `iter(stream)` afresh and the train pass skipped only
+    # EVAL_SAMPLES (=200) raw items. But the eval pass consumes MORE than 200 raw items
+    # whenever it skips some, so every eval sample drawn from raw index >= 200 was
+    # re-emitted into train.json — a train/eval overlap.
+    shared = iter(train_stream)
+    process_stream(shared, EVAL_SAMPLES, EVAL_JSON, "eval")
+    process_stream(shared, TRAIN_SAMPLES, TRAIN_JSON, "train")
     
     print("\n✨ Data Prep Complete!")
 
-def process_stream(stream, num_samples, json_path, prefix, skip_count=0):
+def process_stream(iterator, num_samples, json_path, prefix):
+    # `iterator` is a SHARED stream iterator (see prepare_data): do NOT re-create it
+    # here, or the disjointness guarantee is lost.
     entries = []
-    iterator = iter(stream)
-    
-    # Skip items used for other sets
-    for _ in range(skip_count):
-        next(iterator)
-
     saved_count = 0
     pbar = tqdm(total=num_samples, desc=f"Processing {prefix}")
 
