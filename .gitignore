@@ -372,3 +372,12 @@ _build/
 !*.yml
 !*.yaml
 !*.toml
+
+# -------------------- Tracked prediction artifacts --------------------
+# output/ (above) is ignored wholesale, and a negation cannot re-include a file whose
+# parent directory is excluded. So re-include the directory, re-exclude its contents,
+# then re-include ONLY the two prediction files the reported metrics depend on.
+!output/
+output/*
+!output/evaluation_results.json
+!output/test_predictions.jsonl

@@ -1,10 +1,14 @@
 """
 setup_audit_data.py
 ===================
-Downloads test samples from SpeechBrain LargeScaleASR (test partition).
-Uses official test split - completely separate from training data.
+Downloads the FULL official test split of SpeechBrain LargeScaleASR (all 6 shards,
+8,087 rows at the pinned revision), decodes audio to 16 kHz WAV, and writes test.json.
 
-This guarantees zero data leakage and proves true generalization.
+The test split is disjoint from the training data (which is drawn from the 'small' TRAIN
+partition), so it is genuinely held-out — unlike data/stage2_full/eval.json, which is the
+head of the train stream and is a validation split, not a test set.
+
+NOTE: 8,087 audio samples is a large pull; run this on the GPU pod, not locally.
 """
 
 import os
@@ -17,8 +21,12 @@ from tqdm import tqdm
 
 # --- CONFIG ---
 DATASET_NAME = "speechbrain/LargeScaleASR"
-TEST_DATA_FILES = ["test/test-00000*"]  # Official test partition
-NUM_SAMPLES = 200
+# All 6 shards of the official test split (test-00000..00005-of-00006 = 8,087 rows at
+# the pinned revision). The previous glob "test/test-00000*" matched ONLY shard 0
+# (1,348 rows), so the earlier draw was the first 200 rows of 1/6 of the split.
+TEST_DATA_FILES = ["test/test-*.parquet"]
+DATASET_REVISION = "0e84cdb9e4b826afaabca5d33ec9453b11aacef3"  # pinned; see PRE_REGISTRATION.md
+NUM_SAMPLES = None  # None = FULL split; set an int ONLY for a quick smoke pull (head slice)
 OUTPUT_DIR = "data/audit_test"
 AUDIO_DIR = os.path.join(OUTPUT_DIR, "audio_clips")
 JSON_PATH = os.path.join(OUTPUT_DIR, "test.json")
@@ -32,7 +40,8 @@ def setup_data():
     print("="*80)
     print(f"Dataset: {DATASET_NAME}")
     print(f"Test partition: {TEST_DATA_FILES}")
-    print(f"Target samples: {NUM_SAMPLES}")
+    print(f"Target samples: {'FULL split' if NUM_SAMPLES is None else NUM_SAMPLES}")
+    print(f"Revision: {DATASET_REVISION}")
     print("="*80)
 
     # Check if already exists
@@ -55,6 +64,7 @@ def setup_data():
         dataset = load_dataset(
             DATASET_NAME,
             data_files=TEST_DATA_FILES,
+            revision=DATASET_REVISION,  # pinned for reproducibility
             num_proc=1,  # Avoid 502 errors
             cache_dir="/workspace/hf_cache"
         )
@@ -70,9 +80,14 @@ def setup_data():
     os.makedirs(AUDIO_DIR, exist_ok=True)
     data_entries = []
 
-    # Select samples to process
-    num_available = min(len(test_data), NUM_SAMPLES)
-    samples_to_process = test_data.select(range(num_available))
+    # Process the FULL split by default (NUM_SAMPLES=None). A cap, if set, is a HEAD
+    # slice for quick smoke pulls ONLY — never for a reported run (file order is not a
+    # sample). For a reported subset, draw seeded random indices instead.
+    if NUM_SAMPLES is None:
+        samples_to_process = test_data
+    else:
+        samples_to_process = test_data.select(range(min(len(test_data), NUM_SAMPLES)))
+    num_available = len(samples_to_process)
 
     print(f"\n💾 Processing {num_available} test samples...")
     saved_count = 0
@@ -98,8 +113,8 @@ def setup_data():
             # Calculate duration
             duration = len(y) / 16000
 
-            # Save .wav
-            filename = f"test_{saved_count:03d}.wav"
+            # Save .wav  (5-digit pad: the full split is 8,087 rows)
+            filename = f"test_{saved_count:05d}.wav"
             file_path = os.path.join(AUDIO_DIR, filename)
             sf.write(file_path, y, 16000)
 
