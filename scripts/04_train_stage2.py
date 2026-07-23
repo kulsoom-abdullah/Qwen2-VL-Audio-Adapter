@@ -170,6 +170,7 @@ class Stage2Collator:
     tokenizer: AutoTokenizer
     feature_extractor: WhisperFeatureExtractor
     base_dir: str
+    n_audio_load_failures: int = 0  # visibility: count silence-substituted samples
 
     def __call__(self, examples):
         input_ids_batch = []
@@ -181,7 +182,14 @@ class Stage2Collator:
             full_audio_path = os.path.join(self.base_dir, ex["audio"])
             try:
                 y, sr = librosa.load(full_audio_path, sr=16000, mono=True)
-            except:
+            except Exception as e:
+                # Behavior unchanged (still substitute 1s of silence so the batch
+                # survives) BUT no longer silent: warn loudly and count it, so a
+                # systematic load failure can't masquerade as "trained on audio".
+                self.n_audio_load_failures += 1
+                print(f"⚠️  AUDIO LOAD FAILED (#{self.n_audio_load_failures}) for "
+                      f"{full_audio_path}: {type(e).__name__}: {e} — substituting "
+                      f"1s of SILENCE against label {ex.get('id', '?')!r}")
                 y = torch.zeros(16000).numpy()
             audio_values_batch.append(y)
 
