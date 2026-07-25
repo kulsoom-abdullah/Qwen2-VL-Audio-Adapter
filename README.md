@@ -5,9 +5,8 @@
 [![HuggingFace](https://img.shields.io/badge/🤗%20Model-HuggingFace-yellow)](https://huggingface.co/kulsoom-abdullah/Qwen2-Audio-7B-Transcription)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
-[![WER](https://img.shields.io/badge/WER-3.6%25-brightgreen)](https://huggingface.co/kulsoom-abdullah/Qwen2-Audio-7B-Transcription)
 
-**Achieves 3.6% WER and 2.5% CER on a held-out eval set (~50 samples)** by fusing a Whisper-Large-v3-Turbo encoder with Qwen2-VL-7B using a two-stage training pipeline.
+**Achieves 3.6% WER and 2.5% CER on a 50-sample validation split (head of the training stream)** by fusing a Whisper-Large-v3-Turbo encoder with Qwen2-VL-7B using a two-stage training pipeline.
 
 ---
 
@@ -42,15 +41,30 @@ This project demonstrates **audio adapter integration** — a technique for exte
 
 ## 📊 Performance Highlights
 
-**Evaluation Context**: WER and CER are the only directly computed metrics, measured on a held-out eval set of ~50 samples (60% exact-match rate; see [`notebooks/01_View_Results_Highlighted.ipynb`](notebooks/01_View_Results_Highlighted.ipynb)). A separate blind manual audit of 100 samples from the SpeechBrain test partition characterized label noise (see [Rigorous Audit](#-rigorous-audit-label-noise--semantic-bias-discovery) below).
+**Evaluation Context**: WER and CER are the only directly computed metrics, measured on a **50-sample validation split** — the head of the training stream (`data/stage2_full/eval.json`), not a held-out test set (60% exact-match rate; see [`notebooks/01_View_Results_Highlighted.ipynb`](notebooks/01_View_Results_Highlighted.ipynb)). These 50 samples are not guaranteed disjoint from the training set, so treat the figure as a validation-split estimate. A separate blind manual audit of 100 samples from the SpeechBrain test partition characterized label noise (see [Rigorous Audit](#-rigorous-audit-label-noise--semantic-bias-discovery) below).
 
-| Metric | Value | Scope | Industry Standard |
-|--------|-------|-------|-------------------|
-| **Word Error Rate (WER)** | **3.6%** | Held-out eval set (n≈50) | 5–10% |
-| **Character Error Rate (CER)** | **2.5%** | Held-out eval set (n≈50) | 3–5% |
-| **Label Correction Rate** | **36%** | Manual audit (n=100, SpeechBrain test) | - |
-| **Sample-level error rate** | **~14%** | Manual audit (n=100), after removing label noise | - |
-| **Compute Efficiency** | **~18 GPU-hours** | Total, both training stages | Hundreds/Thousands |
+| Metric | Value | Scope |
+|--------|-------|-------|
+| **Word Error Rate (WER)** | **3.6%** | Validation split (n≈50) |
+| **Character Error Rate (CER)** | **2.5%** | Validation split (n≈50) |
+| **Label Correction Rate** | **36%** | Manual audit (n=100, SpeechBrain test) |
+| **Sample-level error rate** | **~14%** | Manual audit (n=100), after removing label noise |
+| **Compute Efficiency** | **~18 GPU-hours** | Total, both training stages |
+
+### 🧪 Test-Partition Result (Full Official Test Set)
+
+Measured on the **full official LargeScaleASR test partition** (dataset revision `0e84cdb9e4b826afaabca5d33ec9453b11aacef3`), n = 8,086 of 8,087 (1 excluded: `test_6343`, empty output). This is a held-out test set, distinct from the 50-sample validation split above.
+
+| Metric | Value | Scope |
+|--------|-------|-------|
+| **Word Error Rate (WER)** | **11.33%** | Test partition, corpus (n=8,086) |
+| **Character Error Rate (CER)** | **6.70%** | Test partition, corpus (n=8,086) |
+| **WER (macro)** | **12.83%** | Test partition, macro |
+| **CER (macro)** | **7.33%** | Test partition, macro |
+
+95% CI (corpus): WER [10.84, 11.85], CER [6.32, 7.12].
+
+A manual audit of 100 samples from this partition, all 100 reviewed against the audio, found 36 where the model's transcription was correct and the reference was wrong. The audited samples fall within this test partition. The reported figure is therefore an upper bound on true error rate.
 
 **Qualitative Finding: Label Noise Robustness**
 During error analysis, I observed that the model frequently **corrected ground-truth label errors** (e.g., fixing typos or missing articles present in the training transcripts). This suggests the model has learned robust phonetic mapping rather than just memorizing the dataset noise.
@@ -189,13 +203,26 @@ This notebook handles:
 2. Resampling your audio to 16kHz.
 3. Running the generation pipeline with visualization.
 
-**Command Line Evaluation (Test Set):**
-To reproduce the WER/CER metrics on the full test dataset:
+**Command-Line Evaluation:**
+Evaluation is split into inference (GPU) and scoring (CPU). Both require the transformers
+fork installed above; the generation step runs a pre-flight that aborts if the audio
+pathway is not live (fork in use, `input_features` accepted, projector/encoder loaded).
 
 ```bash
-python scripts/05_evaluate.py
+# 1) inference on the test partition -> per-sample JSONL (GPU)
+python scripts/generate_test_predictions.py \
+    --test-json data/audit_test/test.json \
+    --output    output/test_predictions.jsonl \
+    --dataset-revision 0e84cdb9e4b826afaabca5d33ec9453b11aacef3
 
+# 2) score -> corpus AND macro WER/CER with bootstrap CIs (CPU, offline)
+python scripts/score_predictions.py output/test_predictions.jsonl
+
+# reproduce the committed 50-sample validation-split figure from saved predictions:
+python scripts/score_predictions.py output/evaluation_results.json
 ```
+
+`scripts/05_evaluate.py` is superseded by the two-step flow above and exits with a pointer to it.
 
 ---
 
@@ -287,15 +314,9 @@ Qwen2-VL-Audio-Adapter/
 
 ---
 
-## 🛠️ Engineering Rigor & Testing
+## Testing
 
-Unlike standard "train-and-pray" projects, this repository includes rigorous sanity checks to ensure the model is functioning as intended.
-
-**`tests/test_audio_sensitivity.py`**
-*   **Purpose**: Verifies that the model is **actually listening** to the audio.
-*   **Method**: Feeds the model distinct audio clips with the *exact same* text instruction.
-*   **Success Criteria**: If the outputs differ, the model is attending to the audio. If outputs are identical, the model is "deaf" (ignoring audio features) and hallucinating based on text priors.
-*   *This test is critical for preventing "placebo" multimodal training where the model learns to ignore the new modality.*
+**`tests/test_audio_sensitivity.py`** — feeds the model different audio clips with the same text instruction and fails if the outputs are identical, which would mean the model is ignoring audio and generating from text priors alone. Run manually, against the nano smoke model rather than the published checkpoint.
 
 ---
 
@@ -316,7 +337,6 @@ Unlike standard "train-and-pray" projects, this repository includes rigorous san
 | **Trainable** | Audio Projector only (4.6M params) |
 | **Frozen** | Audio Encoder + LLM (~8.5B params) |
 | **Dataset** | ~20,000 samples (SpeechBrain ASR) |
-| **Duration** | ~12 hours |
 | **Final Loss** | ~0.30 (Converged) |
 | **Optimizer** | AdamW (lr=1e-3, High LR for initialization) |
 
@@ -329,7 +349,6 @@ Unlike standard "train-and-pray" projects, this repository includes rigorous san
 | **Trainable** | Projector + LLM Adapters (Rank-64) |
 | **Frozen** | Audio Encoder |
 | **Dataset** | ~20,000 samples |
-| **Duration** | ~6 hours |
 | **Final Loss** | ~0.06 (Highly accurate) |
 | **Technique** | 4-bit QLoRA (BitsAndBytes) |
 

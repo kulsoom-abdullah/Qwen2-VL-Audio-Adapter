@@ -29,34 +29,61 @@ model-index:
       name: Speech Recognition
     dataset:
       type: speechbrain/LargeScaleASR
-      name: SpeechBrain Large Scale ASR (held-out eval subset, n≈50)
+      name: SpeechBrain Large Scale ASR (validation split, n≈50)
     metrics:
     - type: wer
       value: 0.036
-      name: Word Error Rate (held-out eval set, n≈50)
+      name: Word Error Rate (validation split, n≈50)
     - type: cer
       value: 0.025
-      name: Character Error Rate (held-out eval set, n≈50)
+      name: Character Error Rate (validation split, n≈50)
+  - task:
+      type: automatic-speech-recognition
+      name: Speech Recognition
+    dataset:
+      type: speechbrain/LargeScaleASR
+      name: SpeechBrain Large Scale ASR (full official test partition, n=8086)
+    metrics:
+    - type: wer
+      value: 0.1133
+      name: Word Error Rate (test partition, corpus, n=8086)
+    - type: cer
+      value: 0.0670
+      name: Character Error Rate (test partition, corpus, n=8086)
 ---
 
 # Qwen2-VL-Audio-Adapter
 
 > **Multimodal Fusion: Integrating Whisper Audio Encoder with Qwen2-VL for Production-Grade Speech Recognition**
 
-**Achieves 3.6% WER and 2.5% CER on a held-out eval set (~50 samples)** by fusing a [Whisper-Large-v3-Turbo](https://huggingface.co/openai/whisper-large-v3-turbo) encoder onto [Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) using a two-stage training pipeline.
+**Achieves 11.3% WER on the full official LargeScaleASR test partition (n=8,086); see full evaluation below.**
 
 ## 🎯 Performance Highlights
 
-**Evaluation Context**: WER and CER are the only directly computed metrics, measured on a held-out eval set of ~50 samples (60% exact-match rate). A separate blind manual audit of 100 samples from the SpeechBrain test partition characterized label noise (see below).
+**Evaluation Context**: WER and CER are the only directly computed metrics, measured on a **50-sample validation split** — the head of the training stream (`data/stage2_full/eval.json`), not a held-out test set (60% exact-match rate). These 50 samples are not guaranteed disjoint from the training set, so treat the figure as a validation-split estimate. A separate blind manual audit of 100 samples from the SpeechBrain test partition characterized label noise (see below).
 
-| Metric | Value | Scope | Industry Standard |
-|--------|-------|-------|-------------------|
-| **Word Error Rate (WER)** | **3.6%** | Held-out eval set (n≈50) | 5–10% |
-| **Character Error Rate (CER)** | **2.5%** | Held-out eval set (n≈50) | 3–5% |
-| **Label Correction Rate** | **36%** | Manual audit (n=100, SpeechBrain test) | - |
-| **Sample-level error rate** | **~14%** | Manual audit (n=100), after removing label noise | - |
+| Metric | Value | Scope |
+|--------|-------|-------|
+| **Word Error Rate (WER)** | **3.6%** | Validation split (n≈50) |
+| **Character Error Rate (CER)** | **2.5%** | Validation split (n≈50) |
+| **Label Correction Rate** | **36%** | Manual audit (n=100, SpeechBrain test) |
 
-**Novel Finding:** In the 100-sample manual audit, the model corrected ground-truth annotations in 36% of samples (the majority of all disagreements), demonstrating context-aware semantic reasoning. Note this is a sample-level rate from manual review, not a measured WER.
+### 🧪 Test-Partition Result (Full Official Test Set)
+
+Measured on the **full official LargeScaleASR test partition** (dataset revision `0e84cdb9e4b826afaabca5d33ec9453b11aacef3`), n = 8,086 of 8,087 (1 excluded: `test_6343`, empty output). This is a held-out test set, distinct from the 50-sample validation split above.
+
+| Metric | Value | Scope |
+|--------|-------|-------|
+| **Word Error Rate (WER)** | **11.33%** | Test partition, corpus (n=8,086) |
+| **Character Error Rate (CER)** | **6.70%** | Test partition, corpus (n=8,086) |
+| **WER (macro)** | **12.83%** | Test partition, macro |
+| **CER (macro)** | **7.33%** | Test partition, macro |
+
+95% CI (corpus): WER [10.84, 11.85], CER [6.32, 7.12].
+
+A manual audit of 100 samples from this partition, all 100 reviewed against the audio, found 36 where the model's transcription was correct and the reference was wrong. The audited samples fall within this test partition. The reported figure is therefore an upper bound on true error rate.
+
+**Novel Finding:** In the 100-sample manual audit, the model corrected ground-truth annotations in 36 of 100 samples — the majority of all disagreements between model and reference, demonstrating context-aware semantic reasoning. Note this is a sample-level rate from manual review, not a measured WER.
 
 ## 🏗️ Architecture
 
